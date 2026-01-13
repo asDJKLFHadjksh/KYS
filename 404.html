@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="refresh" content="0; url=./index.html" />
+  <title>Redirecting…</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon_off.svg">
+  <style>
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #0d0d0f;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <p>Mengarahkan ke beranda…</p>
+
+  <script>
+    const path = location.pathname;
+    const segments = path.split('/').filter(Boolean);
+
+    if (segments.length >= 2) {
+      sessionStorage.setItem('show404Banner', '1');
+      sessionStorage.setItem('badPath', path);
+    }
+
+    location.replace('./index.html');
+  </script>
+</body>
+</html>

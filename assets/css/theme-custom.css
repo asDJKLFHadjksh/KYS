@@ -1,0 +1,16 @@
+/*
+  Custom theme overrides.
+  Ubah nilai CSS variables di sini untuk mengganti tema.
+
+  Contoh:
+  :root {
+    --site-accent: #22c55e;
+    --site-bg: #0f172a;
+    --site-font: "Poppins", "Segoe UI", sans-serif;
+  }
+*/
+
+/*
+  Jika pakai Google Fonts, bisa tambahkan:
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+*/

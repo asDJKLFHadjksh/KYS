@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg" />
+  <link rel="shortcut icon" type="image/svg+xml" href="../img/favicon.svg" />
+  <link rel="apple-touch-icon" href="../img/favicon.svg" />
+
+  <title>TEH — Tools &amp; Experiment Hub</title>
+
+  <link rel="stylesheet" href="../assets/css/theme.css" />
+  <link rel="stylesheet" href="../assets/css/theme-custom.css" />
+  <link rel="stylesheet" href="teh.css" />
+</head>
+<body>
+  <main class="teh-wrapper">
+    <a href="../index.html" class="teh-back">← Kembali ke Beranda</a>
+    <header class="teh-header">
+      <h1>TEH — Tools &amp; Experiment Hub</h1>
+      <p class="teh-subtitle">
+        TEH — Tools &amp; Experiment Hub merupakan dokumentasi internal yang kami bagikan ke publik.
+        Di sini kamu bisa menemukan berbagai pengetahuan, template, tips, dan script siap pakai yang disertai contoh, eksperimen, dan panduan penggunaan secara praktis.
+      </p>
+    </header>
+
+    <section class="teh-controls" aria-label="Pencarian dan filter">
+      <label class="teh-field">
+        <span>Cari Judul atau Materi</span>
+        <input
+          id="tehSearch"
+          class="teh-input"
+          type="search"
+          placeholder="Ketik untuk mencari..."
+          autocomplete="off"
+        />
+      </label>
+
+      <label class="teh-field">
+        <span>Filter Kategori</span>
+        <select id="tehCategory" class="teh-select">
+          <option value="">Semua Kategori</option>
+        </select>
+      </label>
+    </section>
+
+    <section class="teh-list" id="tehList" aria-live="polite">
+      <p class="teh-empty">Memuat data TEH...</p>
+    </section>
+  </main>
+
+  <div class="teh-gate" id="tehGate" aria-hidden="true">
+    <div class="teh-gate__modal" role="dialog" aria-modal="true" aria-labelledby="tehGateTitle">
+      <div class="teh-gate__loader" aria-hidden="true">
+        <div class="teh-gate__loader-fallback"></div>
+        <div class="teh-gate__loader-lottie" id="tehGateLottie"></div>
+      </div>
+      <h2 class="teh-gate__title" id="tehGateTitle">TEH Sedang Ditahap Pengembangan</h2>
+      <p class="teh-gate__desc">
+        <span>Saat ini kami sedang menyiapkan konten untuk tab ini.</span>
+        <span>Silakan kembali lagi nanti yaaa, terima kasihh.</span>
+      </p>
+      <a class="teh-gate__action" href="../index.html">Kembali Menu Utama</a>
+    </div>
+  </div>
+
+  <div class="teh-lightbox" aria-hidden="true">
+    <button class="teh-lightbox__close" type="button" aria-label="Tutup">
+      &times;
+    </button>
+    <img class="teh-lightbox__image" alt="Preview gambar" draggable="false" />
+  </div>
+
+  <script src="https://unpkg.com/lottie-web/build/player/lottie.min.js"></script>
+  <script src="../js/loader.js"></script>
+  <script src="teh.js"></script>
+</body>
+</html>

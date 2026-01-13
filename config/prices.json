@@ -1,0 +1,167 @@
+{
+  "whatsapp": "6283862121733",
+  "backup_request_message": "Halo Mas AL, saya ingin meminta file.%0A%0ABerikut detail pesanan saya:%0A- Judul: {{judul}}%0A- Code Projek: {{code_projek}}%0A- Code Order: {{code_order}}%0A%0ATerima kasih atas bantuannya🙏",
+  "bufferFee": {
+    "30": 15,
+    "60": 25,
+    "120": 35
+  },
+  "workSchedule": {
+    "Minggu":    { "buka": 9,  "tutup": 22 },
+    "Senin":     { "buka": 19, "tutup": 22 },
+    "Selasa":    { "buka": 19, "tutup": 22 },
+    "Rabu":      { "buka": 19, "tutup": 22 },
+    "Kamis":     { "buka": 19, "tutup": 22 },
+    "Jumat":     { "buka": 19, "tutup": 22 },
+    "Sabtu":     { "buka": 9,  "tutup": 18 }
+  },
+  "packages": [
+    {
+      "id": 4,
+      "name": "Paket Gabut",
+      "price": 0,
+      "revisions": 0,
+      "extra_revision_percent": 100,
+      "durationText": "Terserah editor",
+      "overRatePerMin": 0,
+      "leadTime": "Tidak ada deadline",
+      "workloadPerMin": 1095,
+      "disabled": true,
+      "deadlinePolicy": {
+        "minDaysPerMinute": 2,
+        "idealDaysPerMinute": 5,
+        "surchargePercent": 15
+      },
+      "features": [
+        "Kualitas menyesuaikan mood editor",
+        "Semua aspek ditentukan oleh editor"
+      ],
+      "tags": [
+        "Random",
+        "Eksperimen"
+      ],
+      "policy": [
+        "Editor berhak berhenti di tengah proses editing, jika dirasa jenuh",
+        "Edit sesuai mood editor",
+        "Musik bebas terserah editor",
+        "Tidak ada revisi",
+        "Gratis (harga IDR 0)",
+        "Proses editing mengikuti kesenangan editor",
+        "Konsep terserah editor",
+        "Tidak ada deadline",
+        "Editor berhak menolak projek jika file RAW dinilai tidak berkualitas",
+        "Klien tidak berhak complain atas hasil editing",
+        "Video tidak bersifat privasi dan boleh dipublikasikan",
+        "Editor bebas bereksperimen tanpa batas"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "Paket InstaClip",
+      "price": 49900,
+      "revisions": 1,
+      "extra_revision_percent": 15,
+      "durationText": "1–5 menit",
+      "overRatePerMin": 5000,
+      "leadTime": "0–1 hari",
+      "workloadPerMin": 0.5,
+      "disabled": false,
+      "deadlinePolicy": {
+        "minDaysPerMinute": 0.2,
+        "idealDaysPerMinute": 0.2,
+        "surchargePercent": 15
+      },
+      "features": [
+        "cut basic",
+        "overlay sederhana",
+        "add backsound",
+        "Gratis Revisi 1x"
+      ],
+      "tags": [
+        "Konten TikTok/Reels",
+        "Highlight Gaming",
+        "Video pendek promosi",
+        "Video Tugas"
+      ],
+      "policy": [
+        "Kebijakan singkat dan fleksibel",
+        "Revisi ringan sesuai brief",
+        "Cocok untuk kebutuhan cepat"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Paket Standar",
+      "price": 124900,
+      "revisions": 2,
+      "extra_revision_percent": 17,
+      "durationText": "1–5 menit",
+      "overRatePerMin": 12000,
+      "leadTime": "1–2 hari",
+      "workloadPerMin": 1,
+      "disabled": false,
+      "deadlinePolicy": {
+        "minDaysPerMinute": 0.2,
+        "idealDaysPerMinute": 0.4,
+        "surchargePercent": 15
+      },
+      "features": [
+        "cut + merge kompleks",
+        "overlay + efek basic",
+        "add backsound bervariasi",
+        "transisi sederhana",
+        "add teks subtitle",
+        "filter warna dasar",
+        "Gratis Revisi 2x"
+      ],
+      "tags": [
+        "Konten YouTube",
+        "Vlog",
+        "Video Edukasi",
+        "Film Pendek Ringan"
+      ],
+      "policy": [
+        "Kebijakan normal sesuai kesepakatan",
+        "DP diperlukan hanya pada kondisi tertentu",
+        "Revisi mengikuti brief yang jelas"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Paket Kreator",
+      "price": 249900,
+      "revisions": 3,
+      "extra_revision_percent": 20,
+      "durationText": "1–5 menit",
+      "overRatePerMin": 45000,
+      "leadTime": "4–5 hari",
+      "workloadPerMin": 3,
+      "disabled": false,
+      "deadlinePolicy": {
+        "minDaysPerMinute": 0.8,
+        "idealDaysPerMinute": 1,
+        "surchargePercent": 15
+      },
+      "features": [
+        "editing kompleks",
+        "transisi dinamis",
+        "efek teks animasi",
+        "color correction",
+        "motion graphics sederhana",
+        "Gratis Revisi 3x"
+      ],
+      "tags": [
+        "Iklan Produk",
+        "Cinematic",
+        "Motion Graphics",
+        "Video Musik"
+      ],
+      "policy": [
+        "Paket premium dengan kebijakan ketat",
+        "DP wajib sebelum pengerjaan",
+        "Aturan lengkap melindungi editor",
+        "Revisi besar di luar brief awal dikenakan biaya tambahan"
+      ]
+    }
+  ]
+}

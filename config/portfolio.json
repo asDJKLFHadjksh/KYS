@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "title": "Contoh Video Gratis",
+      "description": "Proyek gratis untuk promosi internal saja.",
+      "video": "https://drive.google.com/file/d/1F5qmL7EKMOeLqY4NJH_ngLWGyN7PxhEZ/preview",
+      "paymentStatus": "free"
+    },
+    {
+      "title": "Jobfair SMK Ma’arif Sudimoro 2023",
+      "description": "Video highlight berdurasi 5 menit yang merangkum jalannya Jobfair 2023 di SMK Ma’arif Sudimoro, menampilkan momen pembukaan, aktivitas peserta, serta interaksi di setiap stand perusahaan. Diedit dengan :pkg1:",
+      "video": "https://drive.google.com/file/d/1DHd5HZ_F85bu4EPN-at1sfPinKTR2i5h/preview",
+      "paymentStatus": "paid"
+    },
+     {
+      "title": "Video event meramaikan 17 agustus 2024 bersama SD/MI",
+      "description": "Highlight perayaan Hari Ulang Tahun Republik Indonesia ke-79. Video berdurasi 1 menit menampilkan detik-detik meriah parade sekolah dasar/MI Ngadirojo sebagai simbol kebersamaan dan nasionalisme. Diedit dengan :pkg2:",
+      "video": "https://drive.google.com/file/d/1ZlmtjArniTXCaNVQJKVqK4daP5ZCvM12/preview",
+      "paymentStatus": "paid"
+    },
+ {
+      "title": "klan Boba Cagak 3 Sudimoro",
+      "description": "Video tugas membuat iklan UMKM. Diedit dengan :pkg4:",
+      "video": "https://drive.google.com/file/d/14KDLIvJL_vxjABJR9wsrUpWhpeN1z1vZ/preview",
+      "paymentStatus": "free"
+    }
+  ]
+}

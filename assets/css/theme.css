@@ -1,0 +1,37 @@
+:root {
+  --site-accent: #8A4EFF;
+  --site-accent-strong: #6f3cff;
+  --site-accent-soft: rgba(138, 78, 255, 0.6);
+  --site-accent-fade: rgba(138, 78, 255, 0.1);
+  --site-bg: #18181b;
+  --site-bg-soft: #202028;
+  --site-surface: #232329;
+  --site-text: #e5e5e5;
+  --site-muted: #9ca3af;
+  --site-border: rgba(255, 255, 255, 0.06);
+  --site-glass: rgba(255, 255, 255, 0.06);
+  --site-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  --site-font: Arial, Helvetica, "Liberation Sans";
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--site-font);
+  background: radial-gradient(circle at top, var(--site-bg-soft), var(--site-bg));
+  color: var(--site-text);
+  min-height: 100vh;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}

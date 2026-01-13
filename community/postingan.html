@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Postingan — Kuhyakuya Studio</title>
+  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+  <link rel="shortcut icon" type="image/svg+xml" href="../img/favicon.svg">
+  <link rel="apple-touch-icon" href="../img/favicon.svg">
+  <link rel="stylesheet" href="../assets/css/theme.css" />
+  <link rel="stylesheet" href="../assets/css/theme-custom.css" />
+  <link rel="stylesheet" href="../community/community.css" />
+</head>
+<body class="notice-list-page">
+  <main class="container">
+    <a href="../index.html" class="notice-back">← Kembali ke Beranda</a>
+
+    <header class="notice-header">
+      <h1>Postingan & Pemberitahuan</h1>
+      <p>
+        Daftar lengkap postingan komunitas, termasuk yang aktif, belum mulai,
+        maupun arsip. Data diperbarui dari Google Sheets.
+      </p>
+    </header>
+
+    <section>
+      <h2>Semua Postingan</h2>
+      <div id="noticeList" class="notice-grid">
+        <p class="notice-empty">Memuat postingan...</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="notice-lightbox" aria-hidden="true">
+    <button class="notice-lightbox__close" type="button" aria-label="Tutup">
+      &times;
+    </button>
+    <img
+      class="notice-lightbox__image"
+      alt="Preview gambar"
+      draggable="false"
+    />
+  </div>
+
+  <script src="https://unpkg.com/lottie-web/build/player/lottie.min.js"></script>
+  <script src="../js/loader.js"></script>
+  <script src="../community/community.js"></script>
+</body>
+</html>

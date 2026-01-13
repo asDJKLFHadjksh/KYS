@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- FAVICON WEB -->
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="shortcut icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="apple-touch-icon" href="img/favicon.svg">
+
+  <title>Home — Kuhyakuya Studio</title>
+
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <link rel="stylesheet" href="assets/css/theme-custom.css">
+  <link rel="stylesheet" href="community/community.css">
+
+  <style>
+    :root {
+      --accent: var(--site-accent);
+      --bg-main: var(--site-bg);
+      --text-main: var(--site-text);
+      --text-muted: var(--site-muted);
+      --border-soft: var(--site-border);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px 20px 120px;
+    }
+
+    /* HEADER */
+    header {
+      margin-bottom: 56px;
+    }
+
+    header h1 {
+      font-size: 2.3rem;
+      font-weight: 700;
+    }
+
+    header p {
+      margin-top: 10px;
+      max-width: 520px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* SECTION */
+    section {
+      margin-bottom: 64px;
+    }
+
+    section h2 {
+      font-size: 1.4rem;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    section h2::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    /* BLOG */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+      align-items: start;
+    }
+
+    .card {
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.03),
+        rgba(255,255,255,0.01)
+      );
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 22px;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .btn-outline {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.85rem;
+      transition: all .25s ease;
+    }
+
+    .btn-outline:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* OFFICIAL LINKS */
+    .link-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      background: linear-gradient(
+        135deg,
+        rgba(138,78,255,0.15),
+        rgba(138,78,255,0.05)
+      );
+      border: 1px solid rgba(138,78,255,0.4);
+      font-size: 0.9rem;
+      transition: all .25s ease;
+    }
+
+    .link-btn img {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+    }
+
+    .link-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 0 4px rgba(138,78,255,0.25);
+    }
+
+    .link-empty {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* FLOATING CTA (SATU-SATUNYA CTA) */
+    .floating-cta {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 999;
+      padding: 14px 22px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #8A4EFF, #6f3cff);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      box-shadow: 0 12px 30px rgba(138,78,255,0.45);
+      transition: all .25s ease;
+    }
+
+    .floating-cta:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 16px 40px rgba(138,78,255,0.6);
+    }
+
+    footer {
+      margin-top: 80px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .smart-404-banner {
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: #d93025;
+      color: #fff;
+      font-size: 13px;
+      z-index: 99999;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .smart-404-banner button {
+      appearance: none;
+      border: none;
+      background: transparent;
+      color: inherit;
+      font-size: 14px;
+      cursor: pointer;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>KuhyaKuya Studio</h1>
+      <p>
+        Komunitas • Kreatif • Business
+      </p>
+    </header>
+
+    <!-- PEMBERITAHUAN & TEH -->
+    <section>
+      <h2>Postingan & TEH</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Postingan</h3>
+          <div id="noticeLatest">
+            <p class="notice-empty">Memuat pemberitahuan...</p>
+          </div>
+          <a href="community/postingan.html" class="btn-outline">Lihat semua</a>
+        </div>
+
+        <div class="card">
+          <h3>TEH — Tools &amp; Experiment Hub</h3>
+          <p>
+            TEH — Tools &amp; Experiment Hub merupakan dokumentasi internal yang kami bagikan ke publik.
+            Di sini kamu bisa menemukan berbagai pengetahuan, template, tips, dan script siap pakai yang disertai contoh, eksperimen, dan panduan penggunaan secara praktis.
+          </p>
+          <a href="teh/index.html" class="btn-outline">Buka TEH</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- OFFICIAL LINKS -->
+    <section>
+      <h2 data-link-title>Community & Social Links</h2>
+      <div class="link-list" data-link-list></div>
+      <p class="link-empty" data-link-empty hidden>Belum ada link yang ditampilkan.</p>
+    </section>
+
+    <footer>
+      © 2025 — Kuhyakuya 
+    </footer>
+  </div>
+
+  <!-- FLOATING ORDER BUTTON -->
+  <a href="EE.html" class="floating-cta">
+    🎬 Order Editing
+  </a>
+
+  <div class="notice-lightbox" aria-hidden="true">
+    <button class="notice-lightbox__close" type="button" aria-label="Tutup">
+      &times;
+    </button>
+    <img class="notice-lightbox__image" alt="Preview gambar" />
+  </div>
+
+  <script>
+    const shouldShow404Banner = sessionStorage.getItem('show404Banner');
+
+    if (shouldShow404Banner) {
+      const badPath = sessionStorage.getItem('badPath');
+      sessionStorage.removeItem('show404Banner');
+      sessionStorage.removeItem('badPath');
+
+      const banner = document.createElement('div');
+      banner.className = 'smart-404-banner';
+      banner.setAttribute('role', 'alert');
+
+      const message = document.createElement('span');
+      message.textContent = badPath
+        ? `Link tidak ditemukan (${badPath}). Kamu diarahkan ke Beranda.`
+        : 'Link tidak ditemukan. Kamu diarahkan ke Beranda.';
+
+      const closeButton = document.createElement('button');
+      closeButton.type = 'button';
+      closeButton.setAttribute('aria-label', 'Tutup pemberitahuan');
+      closeButton.textContent = '✕';
+      closeButton.addEventListener('click', () => {
+        banner.remove();
+      });
+
+      banner.appendChild(message);
+      banner.appendChild(closeButton);
+      document.body.appendChild(banner);
+
+      setTimeout(() => {
+        banner.remove();
+      }, 5000);
+    }
+  </script>
+  <script src="https://unpkg.com/lottie-web/build/player/lottie.min.js"></script>
+  <script src="js/loader.js"></script>
+  <script src="assets/js/link-list.js"></script>
+  <script src="community/community.js"></script>
+</body>
+</html>

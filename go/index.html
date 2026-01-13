@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <link rel="icon" type="image/svg+xml" href="/img/favicon.svg" id="redirect-favicon">
+</head>
+<body>
+<script>
+  const routes = {
+    youtube: "https://youtube.com/c/KuhyaKuya?sub_confirmation=1",
+    yt: "https://youtube.com/c/KuhyaKuya?sub_confirmation=1",
+
+    tiktok: "https://tiktok.com/@kuhyakuya",
+    tt: "https://tiktok.com/@kuhyakuya",
+
+    instagram: "https://www.instagram.com/kuhyakuya?igsh=bmxxN2lvdXRoOXZ5",
+    ig: "https://www.instagram.com/kuhyakuya?igsh=bmxxN2lvdXRoOXZ5",
+
+    discord: "https://discord.com/invite/YqKVt4CREE",
+    dc: "https://discord.com/invite/YqKVt4CREE"
+  };
+
+  const DEFAULT_FAVICON = "/img/favicon.svg";
+  const params = new URLSearchParams(window.location.search);
+  const targetKey = (params.get("to") || "").trim().toLowerCase();
+  const targetUrl = routes[targetKey];
+
+  const ensureFaviconLink = () => {
+    let link = document.querySelector('link[rel="icon"]');
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "icon";
+      link.type = "image/svg+xml";
+      document.head.appendChild(link);
+    }
+    return link;
+  };
+
+  const getFaviconUrl = (linkUrl) => {
+    try {
+      const { hostname } = new URL(linkUrl);
+      return `https://www.google.com/s2/favicons?sz=64&domain=${hostname}`;
+    } catch (error) {
+      return DEFAULT_FAVICON;
+    }
+  };
+
+  const favicon = ensureFaviconLink();
+
+  if (targetUrl) {
+    favicon.href = getFaviconUrl(targetUrl);
+    window.location.replace(targetUrl);
+  } else {
+    favicon.href = DEFAULT_FAVICON;
+    window.location.replace("./fallback-direct.html");
+  }
+</script>
+</body>
+</html>
+
+
+
+

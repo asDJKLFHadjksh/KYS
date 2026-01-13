@@ -1,0 +1,20 @@
+{
+  "title": "Community & Social Links",
+  "links": [
+    {
+      "label": "YouTube Animation",
+      "url": "https://kuhyakuya.com/go/?to=yt",
+      "favicon": "youtube.com"
+    },
+    {
+      "label": "Instagram",
+      "url": "https://kuhyakuya.com/go/?to=ig",
+      "favicon": "instagram.com"
+    },
+    {
+      "label": "Discord Server",
+      "url": "https://kuhyakuya.com/go/?to=dc",
+      "favicon": "discord.com"
+    }
+  ]
+}

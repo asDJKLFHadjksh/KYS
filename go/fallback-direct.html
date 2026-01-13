@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="icon" type="image/svg+xml" href="../img/favicon_off.svg">
+
+  <title>Link Tidak Ditemukan</title>
+  <link rel="stylesheet" href="../assets/css/theme.css">
+  <link rel="stylesheet" href="../assets/css/theme-custom.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 32px 20px;
+      background: radial-gradient(circle at top, var(--site-bg-soft), var(--site-bg));
+      color: var(--site-text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: var(--site-surface);
+      padding: 36px;
+      border-radius: 16px;
+      width: min(520px, 100%);
+      box-shadow: var(--site-shadow);
+      border: 1px solid var(--site-border);
+      text-align: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--site-accent);
+      margin-bottom: 12px;
+    }
+
+    .desc {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      color: var(--site-muted);
+    }
+
+    .link-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(138, 78, 255, 0.4);
+      background: linear-gradient(
+        135deg,
+        rgba(138, 78, 255, 0.16),
+        rgba(138, 78, 255, 0.05)
+      );
+      color: var(--site-text);
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .link-btn img {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+    }
+
+    .link-btn:hover {
+      background: var(--site-accent);
+      color: #fff;
+      box-shadow: 0 0 0 4px rgba(138, 78, 255, 0.25);
+    }
+
+    .btn {
+      background: var(--site-accent);
+      padding: 12px 24px;
+      border-radius: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-block;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--site-accent-strong);
+    }
+
+    .link-empty {
+      color: var(--site-muted);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="title">Link Tidak Tersedia</div>
+    <div class="desc">
+      Sepertinya platform atau kode link yang kamu masukkan
+      <b>tidak terdaftar</b> sebagai akun resmi KuhyaKuya Studio.
+      Kamu bisa pilih tautan resmi di bawah ini.
+    </div>
+    <div class="link-list" data-link-list></div>
+    <div class="link-empty" data-link-empty hidden>Link resmi belum tersedia.</div>
+    <a href="../index.html" class="btn">Kembali ke Beranda</a>
+  </div>
+
+  <script>
+    const listEl = document.querySelector('[data-link-list]');
+    const emptyEl = document.querySelector('[data-link-empty]');
+
+    const getFaviconUrl = (linkUrl, fallbackDomain) => {
+      if (fallbackDomain) {
+        return `https://www.google.com/s2/favicons?sz=64&domain=${fallbackDomain}`;
+      }
+
+      try {
+        const { hostname } = new URL(linkUrl);
+        return `https://www.google.com/s2/favicons?sz=64&domain=${hostname}`;
+      } catch (error) {
+        return '../img/favicon_off.svg';
+      }
+    };
+
+    const renderLinks = (links = []) => {
+      if (!listEl) return;
+      listEl.innerHTML = '';
+
+      if (!links.length) {
+        if (emptyEl) emptyEl.hidden = false;
+        return;
+      }
+
+      if (emptyEl) emptyEl.hidden = true;
+
+      links.forEach((link) => {
+        if (!link?.url) return;
+        const anchor = document.createElement('a');
+        anchor.className = 'link-btn';
+        anchor.href = link.url;
+        anchor.target = '_blank';
+        anchor.rel = 'noopener noreferrer';
+
+        const icon = document.createElement('img');
+        icon.loading = 'lazy';
+        icon.alt = '';
+        icon.src = getFaviconUrl(link.url, link.favicon);
+
+        const text = document.createElement('span');
+        text.textContent = link.label || link.url;
+
+        anchor.append(icon, text);
+        listEl.append(anchor);
+      });
+    };
+
+    const linksUrl = new URL('../config/links.json', window.location.href);
+
+    fetch(linksUrl)
+      .then((response) => response.json())
+      .then((data) => renderLinks(data?.links))
+      .catch(() => renderLinks());
+  </script>
+</body>
+</html>
