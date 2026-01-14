@@ -819,8 +819,7 @@
           <p><strong>Paket:</strong> ${escapeHtml(pkg?.name||'-')}</p>
           <p><strong>Durasi:</strong> ${durationText}</p>
           <p><strong>Harga Paket:</strong> ${Pricing.fmtIDR(calc?.baseFinal||0)}</p>
-          <p><strong>Biaya 5+:</strong> ${Pricing.fmtIDR(calc?.overCost||0)}</p>
-          <p><strong>Catatan:</strong> Biaya 5+ dihitung untuk durasi di atas 5 menit.</p>
+          <p><strong>Overtime:</strong> ${Pricing.fmtIDR(calc?.overCost||0)}</p>
           <p><strong>Deadline Surcharge:</strong> ${Pricing.fmtIDR(calc?.surchargeVal||0)}</p>
           <p><strong>Buffer Fee:</strong> ${Pricing.fmtIDR(calc?.bufVal||0)}</p>
           <p><strong>Subtotal (tanpa revisi):</strong> ${Pricing.fmtIDR(subtotalWithoutRevision||0)}</p>
@@ -864,12 +863,8 @@
           <span class="order-detail-value val-paket">${Pricing.fmtIDR(calc.baseFinal)}</span>
         </div>
         <div class="order-detail-row">
-          <span class="order-detail-label"><span class="order-detail-dot dot-overtime"></span>Biaya 5+:</span>
+          <span class="order-detail-label"><span class="order-detail-dot dot-overtime"></span>Overtime:</span>
           <span class="order-detail-value val-overtime">${calc.overMin} mnt × ${Pricing.fmtIDR(calc.overRate||0)} = ${Pricing.fmtIDR(calc.overCost)}</span>
-        </div>
-        <div class="order-detail-row">
-          <span class="order-detail-label"></span>
-          <span class="order-detail-value">Biaya 5+ dihitung untuk durasi di atas 5 menit.</span>
         </div>
         <div class="order-detail-row">
           <span class="order-detail-label"><span class="order-detail-dot dot-deadline"></span>Deadline Surcharge:</span>
@@ -1128,7 +1123,6 @@
       container.innerHTML='';
       packages.forEach(pkg=>{
         const {normal,percent,final}=Pricing.getFinalPrice(pkg,promo);
-        const overRatePerMin=Pricing.getOverRatePerMin(pkg);
         const isRekom=checkRekom(promo,pkg.id);
         const wrapper=document.createElement('div');
         wrapper.className='card-wrapper';
@@ -1154,7 +1148,7 @@
             <div class="card-face card-back hide">
               <h4 class="detail-title">Rincian Tambahan Biaya</h4>
               <ul>
-                <li>Biaya 5+ (&gt; 5 menit): ${Pricing.fmtIDR(overRatePerMin)} / menit</li>
+                <li>Tambah durasi &gt; 5 menit: + ${Pricing.fmtIDR(pkg.overRatePerMin||0)} / menit</li>
                 <li>Revisi: Gratis ${Number(pkg.revisions||0)}x</li>
                 <li>Revisi tambahan: +${Number(pkg.extra_revision_percent||0)}% dari subtotal / revisi</li>
               </ul>

@@ -66,7 +66,7 @@
           <div>
             <label for="durasi">Durasi total (menit) *</label>
             <input id="durasi" type="number" min="1" step="1" required>
-            <div class="helper">Biaya 5+ dihitung untuk durasi di atas 5 menit.</div>
+            <div class="helper">Overtime dihitung di atas 5 menit.</div>
           </div>
           <div>
             <label for="deadline">Deadline (hari) *</label>
@@ -93,12 +93,11 @@
         <h2>Ringkasan</h2>
         <div class="summary">
           <div><span>Base price</span><span id="sumBase">IDR 0</span></div>
-          <div><span>Biaya 5+</span><span id="sumOver">0 mnt × IDR 0 = IDR 0</span></div>
+          <div><span>Overtime</span><span id="sumOver">0 mnt × IDR 0 = IDR 0</span></div>
           <div><span>Deadline surcharge</span><span id="sumSurcharge">+0% = IDR 0</span></div>
           <div><span>Buffer fee</span><span id="sumBuffer">+0% = IDR 0</span></div>
           <div class="total"><span>Total</span><span id="sumTotal">IDR 0</span></div>
           <div class="helper">Estimasi selesai: <b id="eta">-</b></div>
-          <div class="helper">Biaya 5+ dihitung untuk durasi di atas 5 menit.</div>
         </div>
         <div id="surchargeNote" class="helper warn" style="display:none"></div>
         <div style="margin-top:16px;display:flex;flex-direction:column;align-items:flex-start;gap:8px">
@@ -312,8 +311,7 @@
         `> Harga normal: ${Pricing.fmtIDR(calc.normal)}`,
         calc.discountPercent>0?`> Diskon ${calc.discountPercent}%: -${Pricing.fmtIDR(calc.normal-calc.baseFinal)}`:null,
         `> Base price: ${Pricing.fmtIDR(calc.baseFinal)}`,
-        `> Biaya 5+: ${calc.overMin} mnt × ${Pricing.fmtIDR(calc.overRate)} = ${Pricing.fmtIDR(calc.overCost)}`,
-        `> Biaya 5+ dihitung untuk durasi di atas 5 menit.`,
+        `> Overtime: ${calc.overMin} mnt × ${Pricing.fmtIDR(calc.overRate)} = ${Pricing.fmtIDR(calc.overCost)}`,
         `> Deadline surcharge: +${formatPercent(calc.surPerc)}% = ${Pricing.fmtIDR(calc.surchargeVal)}`,
         `> Buffer fee: +${calc.bufPerc}% = ${Pricing.fmtIDR(calc.bufVal)}`,
         `> ${Pricing.fmtIDR(calc.baseFinal)} + ${Pricing.fmtIDR(calc.overCost)} + ${Pricing.fmtIDR(calc.surchargeVal)} + ${Pricing.fmtIDR(calc.bufVal)}`,
