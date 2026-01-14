@@ -62,7 +62,7 @@
       "revisions": 1,
       "extra_revision_percent": 15,
       "durationText": "1–5 menit",
-      "overRatePercentPerMin": 0.1002,
+      "overRatePercentPerMin": 2,
       "leadTime": "0–1 hari",
       "workloadPerMin": 0.5,
       "disabled": false,
