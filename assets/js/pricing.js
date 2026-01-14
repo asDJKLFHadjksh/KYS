@@ -3,6 +3,13 @@
 // ===== Helpers =====
 const fmtIDR = n => "IDR " + (Number(n)||0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 function numberWithSeparators(x){return (x??0).toString().replace(/\B(?=(\d{3})+(?!\d))/g,',')}
+const roundToNearestThousand = n => Math.round((Number(n)||0) / 1000) * 1000;
+
+function calcOverRatePerMin(pkg){
+  const base = Number(pkg?.price) || 0;
+  const percent = Number(pkg?.overRatePercentPerMin) || 0;
+  return roundToNearestThousand(base * percent);
+}
 
 // Cari buffer fee sesuai durasi
 function computeBufferPercent(durasi, map){
@@ -66,7 +73,8 @@ function calcTotal(pkg, cfg, promo, durasi, deadline){
 
   // overtime
   const overMin = Math.max(0, durasi-5);
-  const overCost = overMin * (pkg.overRatePerMin || 0);
+  const overRate = calcOverRatePerMin(pkg);
+  const overCost = overMin * overRate;
 
   // subtotal setelah diskon + overtime
   const subTotal = final + overCost;
@@ -113,7 +121,7 @@ function calcTotal(pkg, cfg, promo, durasi, deadline){
     discountPercent: percent,
     baseFinal: final,      // harga setelah diskon
     overMin,
-    overRate: pkg.overRatePerMin,
+    overRate,
     overCost,
     surchargeVal,
     surPerc: surPercRounded,
@@ -133,5 +141,6 @@ window.Pricing = {
   loadConfig,
   getFinalPrice,
   calcTotal,
-  getDeadlineGuidance
+  getDeadlineGuidance,
+  calcOverRatePerMin
 };
