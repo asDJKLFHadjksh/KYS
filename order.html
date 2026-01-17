@@ -208,11 +208,15 @@
   <script src="assets/js/pricing.js"></script>
   <script>
     function encodeKYS(payload){
-      const json=JSON.stringify(payload);
-      const encoded=btoa(json)
-        .replace(/\+/g,'-')
-        .replace(/\//g,'_')
-        .replace(/=+$/,'');
+      const compactPayload={
+        pid:payload.packageId,
+        dur:payload.duration,
+        ddl:payload.deadline,
+        nl:payload.noteLength,
+        ts:payload.timestamp
+      };
+      const json=JSON.stringify(compactPayload);
+      const encoded=btoa(json);
       return `KYS-${encoded}`;
     }
     function formatTimestamp(value){
