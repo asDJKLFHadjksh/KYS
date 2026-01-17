@@ -84,6 +84,7 @@
     .nav-btn{margin-bottom:16px;display:inline-block;background:transparent;color:var(--accent);text-decoration:none;font-size:14px;font-weight:bold}
     .order-code-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
     .copy-status{font-size:12px;color:var(--muted)}
+    .visually-hidden{position:absolute !important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   </style>
 </head>
 <body>
@@ -195,9 +196,9 @@
         <div style="margin-top:16px;display:flex;flex-direction:column;align-items:flex-start;gap:8px">
           <button id="btnOrder" class="btn" disabled>Order via WhatsApp</button>
           <div class="order-code-actions">
-            <span id="orderCode" class="pill" title="Order Code"></span>
+            <span id="orderCode" class="pill visually-hidden" title="Order Code"></span>
             <button id="copyOrderCode" class="btn-copy" type="button">Copy</button>
-            <span id="copyStatus" class="copy-status" role="status" aria-live="polite"></span>
+            <span id="copyStatus" class="copy-status visually-hidden" role="status" aria-live="polite"></span>
           </div>
         </div>
       </aside>
@@ -207,12 +208,25 @@
   <script src="assets/js/pricing.js"></script>
   <script>
     function encodeKYS(payload){
-      const json=JSON.stringify(payload);
-      const encoded=btoa(json)
-        .replace(/\+/g,'-')
-        .replace(/\//g,'_')
-        .replace(/=+$/,'');
+      const compactPayload={
+        pid:payload.packageId,
+        dur:payload.duration,
+        ddl:payload.deadline,
+        nl:payload.noteLength,
+        ts:payload.timestamp
+      };
+      const json=JSON.stringify(compactPayload);
+      const encoded=btoa(json);
       return `KYS-${encoded}`;
+    }
+    function formatTimestamp(value){
+      const date=value instanceof Date?value:new Date();
+      const pad=number=>String(number).padStart(2,'0');
+      return [
+        date.getFullYear(),
+        pad(date.getMonth()+1),
+        pad(date.getDate())
+      ].join('')+`-${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`;
     }
     function addDays(date, days){ const d=new Date(date); d.setDate(d.getDate()+days); return d; }
     function nextDayStart(){ const d=new Date(); d.setDate(d.getDate()+1); d.setHours(0,0,0,0); return d; }
@@ -337,7 +351,9 @@
       }
 
       deadlineHelper.innerHTML=helperMessage;
-      const note=(document.getElementById('note').value||'').trim();
+      const noteValue=document.getElementById('note').value||'';
+      const note=noteValue.trim();
+      const noteLength=noteValue.length;
       const ref=(document.getElementById('ref').value||'').trim();
 
       const noteErr=document.getElementById('noteErr');
@@ -401,7 +417,9 @@
       const code=encodeKYS({
         packageId:pkg.id,
         duration:durasi,
-        deadline:days
+        deadline:days,
+        noteLength,
+        timestamp:formatTimestamp()
       });
       document.getElementById('orderCode').textContent=code;
 
