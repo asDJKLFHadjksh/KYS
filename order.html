@@ -55,7 +55,10 @@
     .order-detail-total{margin-top:12px;padding-top:10px;border-top:1px dashed rgba(255,255,255,0.15);font-weight:700}
     .order-detail-subtotal{margin-top:6px;font-weight:600;font-size:14px;display:flex;align-items:baseline;justify-content:space-between;color:#EDEDED}
     .revision-sim{margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08)}
-    .revision-sim h3{font-size:14px;margin-bottom:8px}
+    .revision-sim summary{list-style:none;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px}
+    .revision-sim summary::-webkit-details-marker{display:none}
+    .revision-sim[open] summary{margin-bottom:8px}
+    .revision-sim .preview-note{font-size:11px;opacity:0.7;font-weight:500}
     .revision-note{font-size:12px;color:var(--muted);margin-top:6px}
     .revision-input{margin-top:8px}
     .btn{background:var(--accent);color:white;padding:12px 16px;border-radius:10px;font-weight:700;cursor:pointer;text-decoration:none;border:0;display:inline-block;transition:all .2s ease}
@@ -156,8 +159,8 @@
           <div class="order-detail-total"><span>Total</span><span id="sumTotal">IDR 0</span></div>
           <div class="helper">Estimasi selesai: <b id="eta">-</b></div>
         </div>
-        <div class="revision-sim">
-          <h3>Simulasi Revisi</h3>
+        <details class="revision-sim">
+          <summary>Simulasi Revisi <span class="preview-note">(preview)</span></summary>
           <label for="revisionCount">Perkiraan jumlah revisi (x)</label>
           <input id="revisionCount" class="revision-input" type="number" min="0" step="1" value="0">
           <div class="helper">Gratis revisi <span id="revisionIncluded">0x</span>, tambahan <span id="revisionExtra">0x</span>.</div>
@@ -174,7 +177,7 @@
           </div>
           <div class="order-detail-total">Total dengan revisi: <span id="revisionTotal">IDR 0</span></div>
           <div class="revision-note">Simulasi ini tidak ikut dikirim ke WhatsApp.</div>
-        </div>
+        </details>
         <div id="surchargeNote" class="helper warn" style="display:none"></div>
         <div style="margin-top:16px;display:flex;flex-direction:column;align-items:flex-start;gap:8px">
           <button id="btnOrder" class="btn" disabled>Order via WhatsApp</button>
