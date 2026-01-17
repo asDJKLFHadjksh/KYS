@@ -745,10 +745,21 @@
     function formatTrackerDate(value){
       const raw=String(value||'').trim();
       if(!raw) return '-';
-      const compactMatch=raw.match(/^(\d{4})(\d{2})(\d{2})[-_]?(\d{2})(\d{2})(\d{2})$/);
-      if(compactMatch){
-        const [,year,month,day,hour,minute,second]=compactMatch;
+      const compactDigits=raw.replace(/[^\d]/g,'');
+      if(compactDigits.length>=12){
+        const year=compactDigits.slice(0,4);
+        const month=compactDigits.slice(4,6);
+        const day=compactDigits.slice(6,8);
+        const hour=compactDigits.slice(8,10);
+        const minute=compactDigits.slice(10,12);
+        const second=compactDigits.length>=14?compactDigits.slice(12,14):'00';
         return `${day}/${month}/${year} ${hour}:${minute}:${second}`;
+      }
+      if(compactDigits.length===8){
+        const year=compactDigits.slice(0,4);
+        const month=compactDigits.slice(4,6);
+        const day=compactDigits.slice(6,8);
+        return `${day}/${month}/${year}`;
       }
       const parsedDate=parseSheetDate(raw);
       if(parsedDate) return formatUiDate(parsedDate);
