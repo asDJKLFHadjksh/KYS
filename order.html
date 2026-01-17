@@ -55,9 +55,12 @@
     .order-detail-total{margin-top:12px;padding-top:10px;border-top:1px dashed rgba(255,255,255,0.15);font-weight:700}
     .order-detail-subtotal{margin-top:6px;font-weight:600;font-size:14px;display:flex;align-items:baseline;justify-content:space-between;color:#EDEDED}
     .revision-sim{margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08)}
-    .revision-sim summary{list-style:none;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px}
+    .revision-sim summary{list-style:none;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:10px;background:var(--site-accent-fade);border:1px dashed var(--site-accent-soft);transition:all .2s ease}
+    .revision-sim summary::after{content:"+";margin-left:auto;font-weight:700;color:var(--site-accent)}
+    .revision-sim:not([open]) summary{box-shadow:0 0 0 2px rgba(138,78,255,0.12)}
     .revision-sim summary::-webkit-details-marker{display:none}
-    .revision-sim[open] summary{margin-bottom:8px}
+    .revision-sim[open] summary{margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08)}
+    .revision-sim[open] summary::after{content:"−"}
     .revision-sim .preview-note{font-size:11px;opacity:0.7;font-weight:500}
     .revision-note{font-size:12px;color:var(--muted);margin-top:6px}
     .revision-input{margin-top:8px}
@@ -65,7 +68,7 @@
     .btn.gold{background:var(--gold);color:var(--gold-text)}
     .btn[disabled]{background:var(--disabled);color:#ccc;cursor:not-allowed;opacity:1}
     .btn-copy{background:var(--glass);color:#fff;border:1px solid rgba(255,255,255,0.12);padding:6px 10px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer}
-    .btn-copy.copied{background:#9BE870;color:#163d0a;border-color:rgba(0,0,0,0.1)}
+    .btn-copy.copied{background:var(--accent);color:#f5f3ff;border-color:var(--site-accent-strong)}
     .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--glass);font-size:12px;color:#fff;margin-top:12px}
     .muted{color:var(--muted)}
     .counter{font-size:12px;color:var(--muted);margin-top:4px;text-align:right}
