@@ -742,6 +742,19 @@
       return new Intl.DateTimeFormat('id-ID',{day:'2-digit',month:'2-digit',year:'numeric'}).format(date);
     }
 
+    function formatTrackerDate(value){
+      const raw=String(value||'').trim();
+      if(!raw) return '-';
+      const compactMatch=raw.match(/^(\d{4})(\d{2})(\d{2})[-_]?(\d{2})(\d{2})(\d{2})$/);
+      if(compactMatch){
+        const [,year,month,day,hour,minute,second]=compactMatch;
+        return `${day}/${month}/${year} ${hour}:${minute}:${second}`;
+      }
+      const parsedDate=parseSheetDate(raw);
+      if(parsedDate) return formatUiDate(parsedDate);
+      return raw;
+    }
+
     function getDateKey(date){
       return new Intl.DateTimeFormat('en-CA',{timeZone:TIME_ZONE}).format(date);
     }
@@ -969,8 +982,8 @@
             const rowData={
               judul:getCellValue(dataRow,'title')||'-',
               statusProgres:getCellValue(dataRow,'statusProgress')||'',
-              tanggalOrder:getCellValue(dataRow,'orderDate')||'-',
-              tanggalSelesai:getCellValue(dataRow,'finishDate')||'-',
+              tanggalOrder:formatTrackerDate(getCellValue(dataRow,'orderDate')),
+              tanggalSelesai:formatTrackerDate(getCellValue(dataRow,'finishDate')),
               backupExpired:getCellValue(dataRow,'backupExpired')||'-',
               statusFile:getCellValue(dataRow,'status')||'',
               codeProjek:getCellValue(dataRow,'projectCode')||'-',
