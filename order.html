@@ -463,9 +463,9 @@
         `> ${Pricing.fmtIDR(calc.baseFinal)} + ${Pricing.fmtIDR(calc.overCost)} + ${Pricing.fmtIDR(calc.surchargeVal)} + ${Pricing.fmtIDR(calc.bufVal)}`,
         `> Total: *${Pricing.fmtIDR(calc.total)}*`,
         '',
+        `*Code Tracker:* ${btn.dataset.code}`,
         btn.dataset.ref?`*Referensi:* ${btn.dataset.ref}`:null,
-        `*Brief:* ${btn.dataset.note}`,
-        `*Order Code:* ${btn.dataset.code}`
+        `*Brief:* ${btn.dataset.note}`
       ].filter(Boolean).join('\n');
 
       const url=`https://wa.me/${phone}?text=`+encodeURIComponent(msg);
