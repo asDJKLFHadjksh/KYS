@@ -17,6 +17,7 @@
       return null;
     }
     const packageId = getFirstNumber(parsed, [
+      "pid",
       "packageId",
       "pkgId",
       "paket",
@@ -28,6 +29,7 @@
       return null;
     }
     const duration = getFirstNumber(parsed, [
+      "dur",
       "durasi",
       "duration",
       "minutes",
@@ -36,6 +38,7 @@
       "d",
     ]);
     const deadline = getFirstNumber(parsed, [
+      "ddl",
       "deadline",
       "days",
       "day",
@@ -43,6 +46,7 @@
       "dl",
     ]);
     const orderDate = getFirstValue(parsed, [
+      "ts",
       "orderDate",
       "order_date",
       "tanggalOrder",
