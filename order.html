@@ -61,6 +61,13 @@
     .revision-sim summary::-webkit-details-marker{display:none}
     .revision-sim[open] summary{margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08)}
     .revision-sim[open] summary::after{content:"−"}
+    .summary-details{margin-top:10px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08)}
+    .summary-details summary{list-style:none;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px dashed rgba(255,255,255,0.12);transition:all .2s ease}
+    .summary-details summary::after{content:"+";margin-left:auto;font-weight:700;color:var(--site-accent)}
+    .summary-details:not([open]) summary{box-shadow:0 0 0 2px rgba(138,78,255,0.12)}
+    .summary-details summary::-webkit-details-marker{display:none}
+    .summary-details[open] summary{margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08)}
+    .summary-details[open] summary::after{content:"−"}
     .revision-sim .preview-note{font-size:11px;opacity:0.7;font-weight:500}
     .revision-note{font-size:12px;color:var(--muted);margin-top:6px}
     .revision-input{margin-top:8px}
@@ -127,40 +134,43 @@
       <aside class="card">
         <h2>Ringkasan</h2>
         <div class="summary">
-          <div class="order-detail-row">
-            <span class="order-detail-label"><span class="order-detail-dot dot-paket"></span>Harga Paket:</span>
-            <span class="order-detail-value val-paket" id="sumBase">IDR 0</span>
-          </div>
-          <div class="order-detail-row">
-            <span class="order-detail-label"><span class="order-detail-dot dot-overtime"></span>Biaya 5+:</span>
-            <span class="order-detail-value val-overtime" id="sumOver">0 mnt × IDR 0 = IDR 0</span>
-          </div>
-          <div class="order-detail-note">Biaya 5+ dihitung untuk durasi di atas 5 menit.</div>
-          <div class="order-detail-row">
-            <span class="order-detail-label"><span class="order-detail-dot dot-deadline"></span>Deadline Surcharge:</span>
-            <span class="order-detail-value val-deadline" id="sumSurcharge">+0% = IDR 0</span>
-          </div>
-          <div class="order-detail-row">
-            <span class="order-detail-label"><span class="order-detail-dot dot-buffer"></span>Buffer Fee:</span>
-            <span class="order-detail-value val-buffer" id="sumBuffer">+0% = IDR 0</span>
-          </div>
-          <div class="order-detail-row order-detail-sum-row">
-            <span class="order-detail-sum-expression">
-              <span class="order-detail-sum-part val-paket" id="sumPartBase">IDR 0</span>
-              <span class="order-detail-sum-operator">+</span>
-              <span class="order-detail-sum-part val-overtime" id="sumPartOver">IDR 0</span>
-              <span class="order-detail-sum-operator">+</span>
-              <span class="order-detail-sum-part val-deadline" id="sumPartSurcharge">IDR 0</span>
-              <span class="order-detail-sum-operator">+</span>
-              <span class="order-detail-sum-part val-buffer" id="sumPartBuffer">IDR 0</span>
-            </span>
-          </div>
-          <div class="order-detail-subtotal">
-            <span>Subtotal (tanpa revisi):</span>
-            <span id="sumSubtotal">IDR 0</span>
-          </div>
           <div class="order-detail-total"><span>Total</span><span id="sumTotal">IDR 0</span></div>
-          <div class="helper">Estimasi selesai: <b id="eta">-</b></div>
+          <details class="summary-details">
+            <summary>Detail Ringkasan</summary>
+            <div class="order-detail-row">
+              <span class="order-detail-label"><span class="order-detail-dot dot-paket"></span>Harga Paket:</span>
+              <span class="order-detail-value val-paket" id="sumBase">IDR 0</span>
+            </div>
+            <div class="order-detail-row">
+              <span class="order-detail-label"><span class="order-detail-dot dot-overtime"></span>Biaya 5+:</span>
+              <span class="order-detail-value val-overtime" id="sumOver">0 mnt × IDR 0 = IDR 0</span>
+            </div>
+            <div class="order-detail-note">Biaya 5+ dihitung untuk durasi di atas 5 menit.</div>
+            <div class="order-detail-row">
+              <span class="order-detail-label"><span class="order-detail-dot dot-deadline"></span>Deadline Surcharge:</span>
+              <span class="order-detail-value val-deadline" id="sumSurcharge">+0% = IDR 0</span>
+            </div>
+            <div class="order-detail-row">
+              <span class="order-detail-label"><span class="order-detail-dot dot-buffer"></span>Buffer Fee:</span>
+              <span class="order-detail-value val-buffer" id="sumBuffer">+0% = IDR 0</span>
+            </div>
+            <div class="order-detail-row order-detail-sum-row">
+              <span class="order-detail-sum-expression">
+                <span class="order-detail-sum-part val-paket" id="sumPartBase">IDR 0</span>
+                <span class="order-detail-sum-operator">+</span>
+                <span class="order-detail-sum-part val-overtime" id="sumPartOver">IDR 0</span>
+                <span class="order-detail-sum-operator">+</span>
+                <span class="order-detail-sum-part val-deadline" id="sumPartSurcharge">IDR 0</span>
+                <span class="order-detail-sum-operator">+</span>
+                <span class="order-detail-sum-part val-buffer" id="sumPartBuffer">IDR 0</span>
+              </span>
+            </div>
+            <div class="order-detail-subtotal">
+              <span>Subtotal (tanpa revisi):</span>
+              <span id="sumSubtotal">IDR 0</span>
+            </div>
+            <div class="helper">Estimasi selesai: <b id="eta">-</b></div>
+          </details>
         </div>
         <details class="revision-sim">
           <summary>Simulasi Revisi <span class="preview-note">(preview)</span></summary>
