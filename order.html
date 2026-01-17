@@ -33,6 +33,31 @@
     .err{color:#ff4d4f}
     .summary div{display:flex;justify-content:space-between;margin:6px 0;font-size:14px}
     .summary .total{font-weight:800;font-size:18px;margin-top:8px;border-top:1px dashed rgba(255,255,255,0.12);padding-top:8px}
+    .order-detail-row{display:flex;align-items:baseline;justify-content:flex-start;gap:6px;margin-bottom:8px;font-size:14px;color:#EDEDED}
+    .order-detail-label{display:flex;align-items:center;gap:8px;color:#EDEDED;font-weight:600}
+    .order-detail-dot{width:8px;height:8px;border-radius:999px;display:inline-block;flex:0 0 8px}
+    .dot-paket{background:#9BE870}
+    .dot-overtime{background:#7AB8FF}
+    .dot-deadline{background:#FF8A8A}
+    .dot-buffer{background:#FFC47A}
+    .dot-revisi{background:#CBB6FF}
+    .order-detail-value{font-weight:600}
+    .order-detail-note{font-size:12px;color:var(--muted);margin:-2px 0 8px 24px}
+    .val-paket{color:#9BE870}
+    .val-overtime{color:#7AB8FF}
+    .val-deadline{color:#FF8A8A}
+    .val-buffer{color:#FFC47A}
+    .val-revisi{color:#CBB6FF}
+    .order-detail-sum-row{margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.08);justify-content:flex-start}
+    .order-detail-sum-expression{display:flex;flex-wrap:wrap;gap:6px 8px;font-size:13px;justify-content:flex-start}
+    .order-detail-sum-part{font-weight:600}
+    .order-detail-sum-operator{color:var(--muted);font-weight:500}
+    .order-detail-total{margin-top:12px;padding-top:10px;border-top:1px dashed rgba(255,255,255,0.15);font-weight:700}
+    .order-detail-subtotal{margin-top:6px;font-weight:600;font-size:14px;display:flex;align-items:baseline;justify-content:space-between;color:#EDEDED}
+    .revision-sim{margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08)}
+    .revision-sim h3{font-size:14px;margin-bottom:8px}
+    .revision-note{font-size:12px;color:var(--muted);margin-top:6px}
+    .revision-input{margin-top:8px}
     .btn{background:var(--accent);color:white;padding:12px 16px;border-radius:10px;font-weight:700;cursor:pointer;text-decoration:none;border:0;display:inline-block;transition:all .2s ease}
     .btn.gold{background:var(--gold);color:var(--gold-text)}
     .btn[disabled]{background:var(--disabled);color:#ccc;cursor:not-allowed;opacity:1}
@@ -92,13 +117,59 @@
       <aside class="card">
         <h2>Ringkasan</h2>
         <div class="summary">
-          <div><span>Base price</span><span id="sumBase">IDR 0</span></div>
-          <div><span>Biaya 5+</span><span id="sumOver">0 mnt × IDR 0 = IDR 0</span></div>
-          <div class="helper">Biaya 5+ dihitung untuk durasi di atas 5 menit.</div>
-          <div><span>Deadline surcharge</span><span id="sumSurcharge">+0% = IDR 0</span></div>
-          <div><span>Buffer fee</span><span id="sumBuffer">+0% = IDR 0</span></div>
-          <div class="total"><span>Total</span><span id="sumTotal">IDR 0</span></div>
+          <div class="order-detail-row">
+            <span class="order-detail-label"><span class="order-detail-dot dot-paket"></span>Harga Paket:</span>
+            <span class="order-detail-value val-paket" id="sumBase">IDR 0</span>
+          </div>
+          <div class="order-detail-row">
+            <span class="order-detail-label"><span class="order-detail-dot dot-overtime"></span>Biaya 5+:</span>
+            <span class="order-detail-value val-overtime" id="sumOver">0 mnt × IDR 0 = IDR 0</span>
+          </div>
+          <div class="order-detail-note">Biaya 5+ dihitung untuk durasi di atas 5 menit.</div>
+          <div class="order-detail-row">
+            <span class="order-detail-label"><span class="order-detail-dot dot-deadline"></span>Deadline Surcharge:</span>
+            <span class="order-detail-value val-deadline" id="sumSurcharge">+0% = IDR 0</span>
+          </div>
+          <div class="order-detail-row">
+            <span class="order-detail-label"><span class="order-detail-dot dot-buffer"></span>Buffer Fee:</span>
+            <span class="order-detail-value val-buffer" id="sumBuffer">+0% = IDR 0</span>
+          </div>
+          <div class="order-detail-row order-detail-sum-row">
+            <span class="order-detail-sum-expression">
+              <span class="order-detail-sum-part val-paket" id="sumPartBase">IDR 0</span>
+              <span class="order-detail-sum-operator">+</span>
+              <span class="order-detail-sum-part val-overtime" id="sumPartOver">IDR 0</span>
+              <span class="order-detail-sum-operator">+</span>
+              <span class="order-detail-sum-part val-deadline" id="sumPartSurcharge">IDR 0</span>
+              <span class="order-detail-sum-operator">+</span>
+              <span class="order-detail-sum-part val-buffer" id="sumPartBuffer">IDR 0</span>
+            </span>
+          </div>
+          <div class="order-detail-subtotal">
+            <span>Subtotal (tanpa revisi):</span>
+            <span id="sumSubtotal">IDR 0</span>
+          </div>
+          <div class="order-detail-total"><span>Total</span><span id="sumTotal">IDR 0</span></div>
           <div class="helper">Estimasi selesai: <b id="eta">-</b></div>
+        </div>
+        <div class="revision-sim">
+          <h3>Simulasi Revisi</h3>
+          <label for="revisionCount">Perkiraan jumlah revisi (x)</label>
+          <input id="revisionCount" class="revision-input" type="number" min="0" step="1" value="0">
+          <div class="helper">Gratis revisi <span id="revisionIncluded">0x</span>, tambahan <span id="revisionExtra">0x</span>.</div>
+          <div class="order-detail-row">
+            <span class="order-detail-label"><span class="order-detail-dot dot-revisi"></span>Biaya Revisi Tambahan:</span>
+            <span class="order-detail-value val-revisi" id="revisionFee">IDR 0</span>
+          </div>
+          <div class="order-detail-row order-detail-sum-row">
+            <span class="order-detail-sum-expression">
+              <span class="order-detail-sum-part" id="revisionSubtotal">IDR 0</span>
+              <span class="order-detail-sum-operator">+</span>
+              <span class="order-detail-sum-part val-revisi" id="revisionFeePart">IDR 0</span>
+            </span>
+          </div>
+          <div class="order-detail-total">Total dengan revisi: <span id="revisionTotal">IDR 0</span></div>
+          <div class="revision-note">Simulasi ini tidak ikut dikirim ke WhatsApp.</div>
         </div>
         <div id="surchargeNote" class="helper warn" style="display:none"></div>
         <div style="margin-top:16px;display:flex;flex-direction:column;align-items:flex-start;gap:8px">
@@ -132,6 +203,17 @@
       if(!Number.isFinite(num)) return '-';
       return parseFloat(num.toFixed(2)).toString();
     }
+    function computeRevisionFee(revisionCount, pkg, subtotal){
+      const revisiUsed=parseInt(revisionCount,10)||0;
+      const included=Number(pkg?.included_revisions ?? pkg?.revisions ?? 0) || 0;
+      const extraCount=Math.max(0,revisiUsed-included);
+      const revisionPercent=Number(pkg?.extra_revision_percent)||0;
+      const baseAmount=Number(subtotal)||0;
+      const fee=extraCount>0 && revisionPercent>0
+        ? Math.round(baseAmount*(revisionPercent/100)*extraCount)
+        : 0;
+      return {revisiUsed,included,extraCount,revisionPercent,fee};
+    }
 
     let pkg=null; let cfg=null; let promo=null;
 
@@ -151,6 +233,7 @@
         const deadlineInput=document.getElementById('deadline');
         const refInput=document.getElementById('ref');
         const noteInput=document.getElementById('note');
+        const revisionInput=document.getElementById('revisionCount');
 
         durasiInput.addEventListener('input',()=>update({reason:'durasi'}));
         durasiInput.addEventListener('change',()=>update({reason:'durasi'}));
@@ -163,6 +246,8 @@
 
         noteInput.addEventListener('input',()=>{update({enforceDeadlineMin:false,reason:'note'});updateCounter();});
         noteInput.addEventListener('change',()=>update({reason:'note-change'}));
+        revisionInput.addEventListener('input',()=>update({enforceDeadlineMin:false,reason:'revision'}));
+        revisionInput.addEventListener('change',()=>update({enforceDeadlineMin:false,reason:'revision-change'}));
 
         document.getElementById('btnOrder').addEventListener('click',onOrder);
         update({reason:'init'});
@@ -256,6 +341,12 @@
       document.getElementById('sumOver').textContent=`${calc.overMin} mnt × ${Pricing.fmtIDR(calc.overRate)} = ${Pricing.fmtIDR(calc.overCost)}`;
       document.getElementById('sumSurcharge').textContent=`+${formatPercent(calc.surPerc)}% = ${Pricing.fmtIDR(calc.surchargeVal)}`;
       document.getElementById('sumBuffer').textContent=`+${calc.bufPerc}% = ${Pricing.fmtIDR(calc.bufVal)}`;
+      document.getElementById('sumPartBase').textContent=Pricing.fmtIDR(calc.baseFinal);
+      document.getElementById('sumPartOver').textContent=Pricing.fmtIDR(calc.overCost);
+      document.getElementById('sumPartSurcharge').textContent=Pricing.fmtIDR(calc.surchargeVal);
+      document.getElementById('sumPartBuffer').textContent=Pricing.fmtIDR(calc.bufVal);
+      const subtotalWithoutRevision=calc.baseFinal+calc.overCost+calc.surchargeVal+calc.bufVal;
+      document.getElementById('sumSubtotal').textContent=Pricing.fmtIDR(subtotalWithoutRevision);
       document.getElementById('sumTotal').textContent=Pricing.fmtIDR(calc.total);
       document.getElementById('eta').textContent=addDays(nextDayStart(),days-1).toLocaleDateString('id-ID',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
 
@@ -270,6 +361,16 @@
         surchargeNote.style.display='none';
         surchargeNote.textContent='';
       }
+
+      const revisionInput=document.getElementById('revisionCount');
+      const revisionInfo=computeRevisionFee(revisionInput.value,pkg,subtotalWithoutRevision);
+      const revisionPercentText=formatPercent(revisionInfo.revisionPercent);
+      document.getElementById('revisionIncluded').textContent=`${revisionInfo.included}x`;
+      document.getElementById('revisionExtra').textContent=`${revisionInfo.extraCount}x`;
+      document.getElementById('revisionFee').textContent=`${Pricing.fmtIDR(revisionInfo.fee)} (${revisionPercentText}% × Subtotal ${Pricing.fmtIDR(subtotalWithoutRevision)} × ${revisionInfo.extraCount}x)`;
+      document.getElementById('revisionSubtotal').textContent=Pricing.fmtIDR(subtotalWithoutRevision);
+      document.getElementById('revisionFeePart').textContent=Pricing.fmtIDR(revisionInfo.fee);
+      document.getElementById('revisionTotal').textContent=Pricing.fmtIDR(subtotalWithoutRevision+revisionInfo.fee);
 
       const code=encodeKYS({
         packageId:pkg.id,
