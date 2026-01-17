@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>KuhyaKuya Studio</title>
-<meta name="description" content="KuhyaKuya Studio – Jasa editing video fleksibel. Harga transparan, order cepat, dan detail kebijakan jelas." />
+<meta name="description" content="KuhyaKuya Studio – Jasa editing video fleksibel. biaya transparan, order cepat, dan detail kebijakan jelas." />
 
   <!-- ✅ favicon -->
   <link rel="icon" type="image/svg+xml" href="img/favicon_v2.svg"> <!-- path updated -->
@@ -418,14 +418,14 @@
         </div>
         <div class="order-panel order-panel-right" id="orderDetailPanel" aria-live="polite">
           <div class="order-detail-head">
-            <span class="order-detail-title">Rincian Harga</span>
+            <span class="order-detail-title">Rincian biaya</span>
             <button id="exportPdfBtn" type="button" hidden>Export to PDF</button>
           </div>
           <div id="order-detail-content">
             <p>Rincian harga akan muncul otomatis untuk code baru (KYS).</p>
           </div>
           <div id="order-detail-warning" class="order-detail-warning" hidden>
-            ⚠️ Peringatan: Harga pada rincian ini menggunakan konfigurasi harga terbaru, jadi bisa berbeda dari harga saat proyek dinyatakan selesai.
+            ⚠️ Peringatan: biaya pada rincian ini menggunakan konfigurasi harga terbaru, jadi bisa berbeda dari harga saat proyek dinyatakan selesai.
           </div>
         </div>
       </div>
@@ -517,7 +517,7 @@
   <script src="assets/js/portfolio.js"></script>
   <script>
     const texts=[
-      "Harga transparan, kerjaan adil. Satu klik untuk hasil terbaik bagi client dan freelancer.",
+      "biaya transparan, kerjaan adil. Satu klik untuk hasil terbaik bagi client dan freelancer.",
       "Jam kerja: Kamis–Selasa 19:00–22:00 • Sabtu–Minggu 09:00–22:00"
     ];
     let idx=0; const el=document.getElementById('rotating-text');
@@ -843,7 +843,7 @@
           <hr>
           <p><strong>Paket:</strong> ${escapeHtml(pkg?.name||'-')}</p>
           <p><strong>Durasi:</strong> ${durationText}</p>
-          <p><strong>Harga Paket:</strong> ${Pricing.fmtIDR(calc?.baseFinal||0)}</p>
+          <p><strong>biaya Paket:</strong> ${Pricing.fmtIDR(calc?.baseFinal||0)}</p>
           <p><strong>Biaya 5+:</strong> ${calc?.overMin||0} mnt × ${Pricing.fmtIDR(calc?.overRate||0)} = ${Pricing.fmtIDR(calc?.overCost||0)}</p>
           <p><strong>Deadline Surcharge:</strong> ${Pricing.fmtIDR(calc?.surchargeVal||0)}</p>
           <p><strong>Buffer Fee:</strong> ${Pricing.fmtIDR(calc?.bufVal||0)}</p>
@@ -884,7 +884,7 @@
         <p><strong>Durasi:</strong> ${formatMinutes(durasi)}</p>
         <p><strong>Deadline:</strong> ${deadline ? `${deadline} hari` : '-'}</p>
         <div class="order-detail-row">
-          <span class="order-detail-label"><span class="order-detail-dot dot-paket"></span>Harga Paket:</span>
+          <span class="order-detail-label"><span class="order-detail-dot dot-paket"></span>biaya Paket:</span>
           <span class="order-detail-value val-paket">${Pricing.fmtIDR(calc.baseFinal)}</span>
         </div>
         <div class="order-detail-row">
@@ -1157,7 +1157,7 @@
             <div class="card-face card-front">
               ${isRekom?'<div class="ribbon">Rekomendasi</div>':''}
               <h3>${escapeHtml(pkg.name)}</h3>
-              <div class="meta">Gratis Revisi: ${pkg.revisions} • Durasi Harga Tetap: ${pkg.durationText} • Deadline: ${pkg.leadTime}</div>
+              <div class="meta">Gratis Revisi: ${pkg.revisions} • Durasi biaya Tetap: ${pkg.durationText} • Deadline: ${pkg.leadTime}</div>
               <div class="price-box">
                 ${percent>0?`<span class="old-price">IDR ${numberWithSeparators(normal)}</span><span class="disc-badge">-${percent}%</span>`:''}
                 <div class="price">IDR ${numberWithSeparators(final)}</div>
