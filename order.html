@@ -214,6 +214,15 @@
         .replace(/=+$/,'');
       return `KYS-${encoded}`;
     }
+    function formatTimestamp(value){
+      const date=value instanceof Date?value:new Date();
+      const pad=number=>String(number).padStart(2,'0');
+      return [
+        date.getFullYear(),
+        pad(date.getMonth()+1),
+        pad(date.getDate())
+      ].join('')+`-${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`;
+    }
     function addDays(date, days){ const d=new Date(date); d.setDate(d.getDate()+days); return d; }
     function nextDayStart(){ const d=new Date(); d.setDate(d.getDate()+1); d.setHours(0,0,0,0); return d; }
     function isValidUrl(u){ try{ new URL(u); return true; }catch(e){ return false; } }
@@ -337,7 +346,9 @@
       }
 
       deadlineHelper.innerHTML=helperMessage;
-      const note=(document.getElementById('note').value||'').trim();
+      const noteValue=document.getElementById('note').value||'';
+      const note=noteValue.trim();
+      const noteLength=noteValue.length;
       const ref=(document.getElementById('ref').value||'').trim();
 
       const noteErr=document.getElementById('noteErr');
@@ -401,7 +412,9 @@
       const code=encodeKYS({
         packageId:pkg.id,
         duration:durasi,
-        deadline:days
+        deadline:days,
+        noteLength,
+        timestamp:formatTimestamp()
       });
       document.getElementById('orderCode').textContent=code;
 
