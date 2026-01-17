@@ -61,12 +61,16 @@
     .btn{background:var(--accent);color:white;padding:12px 16px;border-radius:10px;font-weight:700;cursor:pointer;text-decoration:none;border:0;display:inline-block;transition:all .2s ease}
     .btn.gold{background:var(--gold);color:var(--gold-text)}
     .btn[disabled]{background:var(--disabled);color:#ccc;cursor:not-allowed;opacity:1}
+    .btn-copy{background:var(--glass);color:#fff;border:1px solid rgba(255,255,255,0.12);padding:6px 10px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer}
+    .btn-copy.copied{background:#9BE870;color:#163d0a;border-color:rgba(0,0,0,0.1)}
     .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--glass);font-size:12px;color:#fff;margin-top:12px}
     .muted{color:var(--muted)}
     .counter{font-size:12px;color:var(--muted);margin-top:4px;text-align:right}
     .warn-limit{color:#ffd166;font-size:12px;text-align:right;display:none}
     input.invalid{border:1px solid #ff4d4f}
     .nav-btn{margin-bottom:16px;display:inline-block;background:transparent;color:var(--accent);text-decoration:none;font-size:14px;font-weight:bold}
+    .order-code-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .copy-status{font-size:12px;color:var(--muted)}
   </style>
 </head>
 <body>
@@ -174,7 +178,11 @@
         <div id="surchargeNote" class="helper warn" style="display:none"></div>
         <div style="margin-top:16px;display:flex;flex-direction:column;align-items:flex-start;gap:8px">
           <button id="btnOrder" class="btn" disabled>Order via WhatsApp</button>
-          <span id="orderCode" class="pill" title="Order Code"></span>
+          <div class="order-code-actions">
+            <span id="orderCode" class="pill" title="Order Code"></span>
+            <button id="copyOrderCode" class="btn-copy" type="button">Copy Order Code</button>
+            <span id="copyStatus" class="copy-status" role="status" aria-live="polite"></span>
+          </div>
         </div>
       </aside>
     </section>
@@ -216,6 +224,7 @@
     }
 
     let pkg=null; let cfg=null; let promo=null;
+    let copyStatusTimeout=null;
 
     (async function init(){
       try{
@@ -250,6 +259,7 @@
         revisionInput.addEventListener('change',()=>update({enforceDeadlineMin:false,reason:'revision-change'}));
 
         document.getElementById('btnOrder').addEventListener('click',onOrder);
+        document.getElementById('copyOrderCode').addEventListener('click',copyOrderCode);
         update({reason:'init'});
       }catch(err){
         console.error('Init error:', err);
@@ -426,6 +436,43 @@
 
       const url=`https://wa.me/${phone}?text=`+encodeURIComponent(msg);
       window.location.href=url;
+    }
+
+    async function copyOrderCode(){
+      const code=document.getElementById('orderCode').textContent.trim();
+      if(!code) return;
+      const copyButton=document.getElementById('copyOrderCode');
+      const status=document.getElementById('copyStatus');
+
+      const setStatus=(message,isSuccess)=>{
+        status.textContent=message;
+        copyButton.classList.toggle('copied',isSuccess);
+        if(copyStatusTimeout) clearTimeout(copyStatusTimeout);
+        copyStatusTimeout=setTimeout(()=>{
+          status.textContent='';
+          copyButton.classList.remove('copied');
+        },2000);
+      };
+
+      try{
+        if(navigator.clipboard?.writeText){
+          await navigator.clipboard.writeText(code);
+        } else {
+          const temp=document.createElement('textarea');
+          temp.value=code;
+          temp.setAttribute('readonly','');
+          temp.style.position='absolute';
+          temp.style.left='-9999px';
+          document.body.appendChild(temp);
+          temp.select();
+          document.execCommand('copy');
+          document.body.removeChild(temp);
+        }
+        setStatus('Order code disalin.',true);
+      }catch(error){
+        console.error('Copy failed:',error);
+        setStatus('Gagal menyalin order code.',false);
+      }
     }
   </script>
 </body>
