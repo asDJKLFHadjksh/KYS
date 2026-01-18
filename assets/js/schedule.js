@@ -186,14 +186,32 @@
 
     setupScheduleIntro();
 
+    const lockScroll=()=>{
+      if(window.__ModalScrollLock?.lock){
+        window.__ModalScrollLock.lock();
+      }
+    };
+
+    const unlockScroll=()=>{
+      if(window.__ModalScrollLock?.unlock){
+        window.__ModalScrollLock.unlock();
+      }
+    };
+
     const openScheduleModal=()=>{
-      popup.classList.remove("tersembunyi");
-      popup.setAttribute("aria-hidden","false");
+      if(popup.classList.contains("tersembunyi")){
+        popup.classList.remove("tersembunyi");
+        popup.setAttribute("aria-hidden","false");
+        lockScroll();
+      }
     };
 
     const closeScheduleModal=()=>{
-      popup.classList.add("tersembunyi");
-      popup.setAttribute("aria-hidden","true");
+      if(!popup.classList.contains("tersembunyi")){
+        popup.classList.add("tersembunyi");
+        popup.setAttribute("aria-hidden","true");
+        unlockScroll();
+      }
     };
 
     if(closeButton){
