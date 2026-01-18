@@ -145,19 +145,19 @@
     }
 
     introElement.classList.add("is-visible");
-    localStorage.setItem("schedule_intro_seen","true");
-
-    let autoHideTimer=window.setTimeout(()=>{
-      introElement.classList.remove("is-visible");
-    },30000);
 
     const closeIntro=()=>{
       introElement.classList.remove("is-visible");
+      localStorage.setItem("schedule_intro_seen","true");
       if(autoHideTimer){
         window.clearTimeout(autoHideTimer);
         autoHideTimer=null;
       }
     };
+
+    let autoHideTimer=window.setTimeout(()=>{
+      closeIntro();
+    },60000);
 
     introElement.addEventListener("click",closeIntro);
     introElement.addEventListener("keydown",(event)=>{

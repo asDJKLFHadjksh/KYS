@@ -37,7 +37,8 @@
     .btn-cek-status:hover{background:var(--accent);color:#fff}
     .btn-cek-status:focus-visible{outline:2px solid var(--site-accent-soft);outline-offset:2px}
     .schedule-indicator{--schedule-color:#4ade80;--schedule-glow:rgba(74,222,128,0.6);position:relative;width:22px;height:22px;padding:0;border:none;background:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
-    .schedule-indicator.is-closed,.schedule-indicator.is-unavailable{--schedule-color:var(--disabled);--schedule-glow:rgba(48,48,48,0.5)}
+    .schedule-indicator.is-closed{--schedule-color:#f87171;--schedule-glow:rgba(248,113,113,0.55)}
+    .schedule-indicator.is-unavailable{--schedule-color:var(--disabled);--schedule-glow:rgba(48,48,48,0.5)}
     .schedule-indicator:focus-visible{outline:2px solid var(--site-accent-soft);outline-offset:4px;border-radius:6px}
     .schedule-indicator .diamond-outer,
     .schedule-indicator .diamond-inner{position:absolute;width:16px;height:16px;transform:rotate(45deg);border-radius:3px}
@@ -47,10 +48,11 @@
     .schedule-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translate(-50%,4px);background:rgba(20,20,20,0.92);color:#fff;padding:4px 8px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease}
     .schedule-indicator:hover .schedule-tooltip,
     .schedule-indicator:focus-visible .schedule-tooltip{opacity:1;transform:translate(-50%,0)}
-    .schedule-intro{margin:12px auto 0;max-width:520px;background:rgba(20,20,20,0.92);color:#fff;border-radius:14px;padding:14px 18px;display:none;align-items:center;gap:16px;box-shadow:0 12px 30px rgba(0,0,0,0.35);text-align:left}
+    .schedule-intro{margin:12px auto 0;max-width:520px;width:fit-content;background:rgba(20,20,20,0.92);color:#fff;border-radius:14px;padding:12px 16px;display:none;align-items:center;gap:14px;box-shadow:0 12px 30px rgba(0,0,0,0.35);text-align:left;border:2px dashed var(--site-accent-soft)}
     .schedule-intro.is-visible{display:flex}
     .schedule-intro .intro-text{font-size:13px;line-height:1.45;color:#f5f5f5}
     .schedule-intro .intro-text span{display:block}
+    .schedule-intro .intro-warning{color:#facc15;font-weight:600;margin-bottom:6px;animation:scheduleIntroPulse 1s ease-in-out infinite}
     .schedule-intro .intro-title{font-weight:600;margin-bottom:4px}
     .schedule-intro .intro-legend{display:flex;flex-direction:column;gap:8px;flex-shrink:0}
     .schedule-intro .legend-item{display:flex;align-items:center;gap:8px;font-size:12px;color:#e4e4e4}
@@ -58,9 +60,13 @@
     .schedule-intro .legend-diamond span{position:absolute;width:12px;height:12px;transform:rotate(45deg);border-radius:3px}
     .schedule-intro .legend-diamond .diamond-outline{border:2px solid var(--schedule-color)}
     .schedule-intro .legend-diamond .diamond-fill{width:8px;height:8px;background:var(--schedule-color)}
-    .schedule-intro .legend-diamond.is-closed{--schedule-color:var(--disabled)}
+    .schedule-intro .legend-diamond.is-closed{--schedule-color:#f87171}
+    @keyframes scheduleIntroPulse{
+      0%,100%{opacity:0.6}
+      50%{opacity:1}
+    }
     @media (max-width:620px){
-      .schedule-intro{margin-top:10px;padding:12px 14px;flex-direction:column;text-align:center}
+      .schedule-intro{margin-top:10px;padding:12px 14px;flex-direction:column;text-align:center;width:min(100%,360px)}
       .schedule-intro .intro-legend{flex-direction:row}
     }
     @keyframes pulseFade{0%,100%{opacity:.55}50%{opacity:1}}
@@ -439,8 +445,9 @@
         </div>
       </div>
       <div class="intro-text">
+        <span class="intro-warning">⚠️ Panduan singkat — hanya muncul 1x</span>
         <span class="intro-title">Indikator ini adalah tombol jadwal kerja.</span>
-        <span>Warna menunjukkan status buka atau tutup.</span>
+        <span>Hijau = Buka, warna redup = Tutup.</span>
         <span>Klik indikator untuk melihat jadwal lengkap.</span>
       </div>
     </div>
