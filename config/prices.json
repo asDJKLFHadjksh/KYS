@@ -7,7 +7,7 @@
     "120": 35
   },
   "workSchedule": {
-    "Minggu":    { "buka": 9,  "tutup": 22 },
+    "Minggu":    { "buka": 9,  "tutup": 12 },
     "Senin":     { "buka": 19, "tutup": 22 },
     "Selasa":    { "buka": 19, "tutup": 22 },
     "Rabu":      { "buka": 19, "tutup": 22 },
