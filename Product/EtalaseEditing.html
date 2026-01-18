@@ -1212,7 +1212,7 @@
     function numberWithSeparators(x){return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',')||'0'}
     function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]))}
     loadPackages();
-    Portfolio.loadAndRender();
+    Portfolio.loadAndRender("..");
       const pfToggle=document.getElementById('pfToggle'); // get toggle label
       const pfGrid=document.getElementById('portfolio'); // get portfolio list
       pfToggle.addEventListener('click',()=>{ // attach click handler
@@ -1220,7 +1220,7 @@
         if(hidden){
           pfGrid.style.display='';
           pfToggle.classList.toggle('active',true); // toggle diamond fill
-          Portfolio.loadAndRender();
+          Portfolio.loadAndRender("..");
         }else{
           pfToggle.classList.toggle('active',false); // toggle diamond fill
           Portfolio.hide();
