@@ -37,11 +37,12 @@
     .btn-cek-status:hover{background:var(--accent);color:#fff}
     .btn-cek-status:focus-visible{outline:2px solid var(--site-accent-soft);outline-offset:2px}
     .schedule-indicator{--schedule-color:#4ade80;--schedule-glow:rgba(74,222,128,0.6);position:relative;width:22px;height:22px;padding:0;border:none;background:none;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
-    .schedule-indicator.is-closed,.schedule-indicator.is-unavailable{--schedule-color:var(--disabled);--schedule-glow:rgba(48,48,48,0.5)}
+    .schedule-indicator.is-closed{--schedule-color:var(--site-accent);--schedule-glow:var(--site-accent-soft)}
+    .schedule-indicator.is-unavailable{--schedule-color:var(--disabled);--schedule-glow:rgba(48,48,48,0.5)}
     .schedule-indicator:focus-visible{outline:2px solid var(--site-accent-soft);outline-offset:4px;border-radius:6px}
     .schedule-indicator .diamond-outer,
     .schedule-indicator .diamond-inner{position:absolute;width:16px;height:16px;transform:rotate(45deg);border-radius:3px}
-    .schedule-indicator .diamond-outer{border:2px solid var(--schedule-color);box-shadow:0 0 10px var(--schedule-glow);opacity:0.9}
+    .schedule-indicator .diamond-outer{border:2px dashed var(--schedule-color);box-shadow:0 0 10px var(--schedule-glow);opacity:0.9}
     .schedule-indicator .diamond-inner{width:10px;height:10px;background:var(--schedule-color);animation:pulseFade 1s ease-in-out infinite}
     .schedule-indicator:hover .diamond-outer{box-shadow:0 0 14px var(--schedule-glow)}
     .schedule-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translate(-50%,4px);background:rgba(20,20,20,0.92);color:#fff;padding:4px 8px;border-radius:6px;font-size:11px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease}
@@ -57,9 +58,9 @@
     .schedule-intro .legend-item{display:flex;align-items:center;gap:8px;font-size:12px;color:#e4e4e4}
     .schedule-intro .legend-diamond{position:relative;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center}
     .schedule-intro .legend-diamond span{position:absolute;width:12px;height:12px;transform:rotate(45deg);border-radius:3px}
-    .schedule-intro .legend-diamond .diamond-outline{border:2px solid var(--schedule-color)}
+    .schedule-intro .legend-diamond .diamond-outline{border:2px dashed var(--schedule-color)}
     .schedule-intro .legend-diamond .diamond-fill{width:8px;height:8px;background:var(--schedule-color)}
-    .schedule-intro .legend-diamond.is-closed{--schedule-color:var(--disabled)}
+    .schedule-intro .legend-diamond.is-closed{--schedule-color:var(--site-accent)}
     @keyframes scheduleIntroPulse{
       0%,100%{opacity:0.6}
       50%{opacity:1}
@@ -305,9 +306,9 @@
       position:absolute;
       top:18px;
       right:22px;
-      background:rgba(255,255,255,0.08);
-      border:none;
-      color:#fff;
+      background:var(--site-accent-fade);
+      border:1px solid var(--site-accent-soft);
+      color:var(--site-accent);
       font-size:20px;
       cursor:pointer;
       width:36px;
@@ -316,10 +317,12 @@
       align-items:center;
       justify-content:center;
       border-radius:50%;
-      transition:background .2s ease;
+      transition:background .2s ease,border-color .2s ease,color .2s ease;
     }
     #popup-jadwal #tutup-jadwal:hover{
-      background:rgba(255,255,255,0.16);
+      background:rgba(138,78,255,0.18);
+      border-color:var(--site-accent);
+      color:#f5f3ff;
     }
     #popup-jadwal .status-wrapper{
       display:flex;
@@ -361,7 +364,7 @@
     }
    #popup-jadwal .jadwal-item.hari-ini {
   background: var(--site-accent-fade);       /* latar highlight */
-  border: 1px solid var(--accent);  /* garis pinggir */
+  border: 1px dashed var(--accent);  /* garis pinggir */
   box-shadow: 0 8px 22px var(--site-accent-soft); /* efek glow */
 }
     #popup-jadwal .jadwal-item.hari-ini .jadwal-hari{color:#fff;}
