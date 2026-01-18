@@ -150,6 +150,12 @@
     const listElement=document.getElementById("jadwal-lengkap");
     const closeButton=document.getElementById("tutup-jadwal");
     const indicatorElement=document.querySelector("[data-open-schedule]");
+    const notificationElement=document.getElementById("scheduleNotification");
+    const INTRO_STORAGE_KEY="schedule_intro_seen";
+    const notificationDuration=4500;
+    const introDelay=650;
+    let notificationTimeout;
+    let introSeen=localStorage.getItem(INTRO_STORAGE_KEY)==="true";
 
     const openScheduleModal=()=>{
       popup.classList.remove("tersembunyi");
@@ -161,8 +167,45 @@
       popup.setAttribute("aria-hidden","true");
     };
 
+    const hideScheduleNotification=()=>{
+      if(!notificationElement){
+        return;
+      }
+      notificationElement.classList.remove("is-visible");
+      notificationElement.setAttribute("aria-hidden","true");
+      if(notificationTimeout){
+        clearTimeout(notificationTimeout);
+        notificationTimeout=undefined;
+      }
+    };
+
+    const showScheduleNotification=()=>{
+      if(!notificationElement){
+        return;
+      }
+      notificationElement.classList.add("is-visible");
+      notificationElement.setAttribute("aria-hidden","false");
+      if(notificationTimeout){
+        clearTimeout(notificationTimeout);
+      }
+      notificationTimeout=setTimeout(hideScheduleNotification,notificationDuration);
+    };
+
+    const markIntroSeen=()=>{
+      localStorage.setItem(INTRO_STORAGE_KEY,"true");
+      introSeen=true;
+    };
+
+    const handleClose=()=>{
+      closeScheduleModal();
+      if(!introSeen){
+        markIntroSeen();
+        showScheduleNotification();
+      }
+    };
+
     if(closeButton){
-      closeButton.addEventListener("click",closeScheduleModal);
+      closeButton.addEventListener("click",handleClose);
     }
 
     document.querySelectorAll("[data-open-schedule]").forEach((trigger)=>{
@@ -171,6 +214,17 @@
         openScheduleModal();
       });
     });
+
+    if(notificationElement){
+      notificationElement.addEventListener("click",()=>{
+        hideScheduleNotification();
+        openScheduleModal();
+      });
+    }
+
+    if(!introSeen){
+      setTimeout(openScheduleModal,introDelay);
+    }
 
     let scheduleData={};
     const update=()=>updateView(scheduleData,statusElement,clockElement,listElement,indicatorElement);
