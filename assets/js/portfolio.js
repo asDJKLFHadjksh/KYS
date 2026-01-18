@@ -6,14 +6,16 @@ function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;',
 
 async function loadAndRenderPortfolio(basePath="."){ // load portfolio & prices
   try{ // catch fetch errors
+    const normalizedBase = basePath.replace(/\/+$/,''); // trim trailing slashes
     const [pfRes,priceRes]=await Promise.all([ // fetch both configs
-      fetch(`${basePath}/config/portfolio.json?ts=${Date.now()}`), // portfolio data
-      fetch(`${basePath}/config/prices.json?ts=${Date.now()}`) // prices for packages
+      fetch(`${normalizedBase}/config/portfolio.json?ts=${Date.now()}`), // portfolio data
+      fetch(`${normalizedBase}/config/prices.json?ts=${Date.now()}`) // prices for packages
     ]); // end fetch
     const data=await pfRes.json(); // parse portfolio json
     const priceData=await priceRes.json(); // parse prices json
+    const assetBase = normalizedBase === "." ? "" : `${normalizedBase}/`;
     (priceData.packages||[]).forEach(pkg=>{packageMap[pkg.id]=pkg.name;}); // build id→name map
-    renderPortfolio(data.items||[]); // render portfolio items
+    renderPortfolio(data.items||[],assetBase); // render portfolio items
   }catch(e){ console.error("Portfolio load error:",e); } // log errors
 }
 
@@ -32,14 +34,14 @@ function toDrivePreviewLink(url){
   return id ? `https://drive.google.com/file/d/${id}/preview` : url;
 }
 
-function renderPortfolio(items){
+function renderPortfolio(items,assetBase=""){
   const container = document.getElementById('portfolio');
   if(!container) return;
   container.innerHTML='';
   const statusMap={ // map payment status to icon data
-    paid:{src:'img/paid.png',alt:'Lunas',title:'Lunas',cls:''}, // added cls for optional styling
-    free:{src:'img/free.png',alt:'Gratis',title:'Gratis',cls:'free'}, // added cls to invert color
-    unpaid:{src:'img/unpaid.png',alt:'Belum Bayar',title:'Belum Bayar',cls:''} // added cls for consistency
+    paid:{src:`${assetBase}img/paid.png`,alt:'Lunas',title:'Lunas',cls:''}, // added cls for optional styling
+    free:{src:`${assetBase}img/free.png`,alt:'Gratis',title:'Gratis',cls:'free'}, // added cls to invert color
+    unpaid:{src:`${assetBase}img/unpaid.png`,alt:'Belum Bayar',title:'Belum Bayar',cls:''} // added cls for consistency
   }; // end of map
   items.forEach(it=>{
     const el=document.createElement('div');
