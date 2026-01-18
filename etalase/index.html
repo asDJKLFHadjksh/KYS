@@ -293,6 +293,7 @@
       align-items:center;
       z-index:1200;
       overscroll-behavior:contain;
+      padding:24px;
     }
     #popup-jadwal.modal.tersembunyi{display:none;}
     #popup-jadwal .konten-modal{
@@ -301,8 +302,8 @@
       border-radius:16px;
       color:#fff;
       max-width:480px;
-      width:100%;
-      max-height:90vh;
+      width:min(480px, 100%);
+      max-height:calc(100svh - 80px);
       position:relative;
       text-align:left;
       box-shadow:0 18px 42px rgba(0,0,0,0.55);
@@ -409,7 +410,12 @@
       letter-spacing:0.4px;
     }
     @media (max-width:520px){
-      #popup-jadwal .konten-modal{padding:24px 20px;}
+      #popup-jadwal.modal{padding:16px;}
+      #popup-jadwal .konten-modal{
+        padding:24px 20px;
+        max-height:calc(100svh - 48px);
+        width:100%;
+      }
       #popup-jadwal .status-wrapper{font-size:18px;}
       #popup-jadwal .jadwal-item{
         flex-direction:column;
