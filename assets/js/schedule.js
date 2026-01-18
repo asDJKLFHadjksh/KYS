@@ -186,14 +186,33 @@
 
     setupScheduleIntro();
 
+    const lockScroll=()=>{
+      const scrollY=window.scrollY||window.pageYOffset;
+      document.documentElement.classList.add("modal-open");
+      document.body.classList.add("modal-open");
+      document.body.style.top=`-${scrollY}px`;
+      document.body.dataset.scrollY=String(scrollY);
+    };
+
+    const unlockScroll=()=>{
+      const storedScrollY=parseInt(document.body.dataset.scrollY||"0",10);
+      document.documentElement.classList.remove("modal-open");
+      document.body.classList.remove("modal-open");
+      document.body.style.top="";
+      document.body.removeAttribute("data-scroll-y");
+      window.scrollTo(0,storedScrollY);
+    };
+
     const openScheduleModal=()=>{
       popup.classList.remove("tersembunyi");
       popup.setAttribute("aria-hidden","false");
+      lockScroll();
     };
 
     const closeScheduleModal=()=>{
       popup.classList.add("tersembunyi");
       popup.setAttribute("aria-hidden","true");
+      unlockScroll();
     };
 
     if(closeButton){
