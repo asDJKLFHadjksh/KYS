@@ -135,6 +135,39 @@
     highlightCurrentDay(listElement,getCurrentDayName());
   }
 
+  function setupScheduleIntro(){
+    const introElement=document.getElementById("scheduleIntro");
+    if(!introElement){
+      return;
+    }
+    if(localStorage.getItem("schedule_intro_seen")==="true"){
+      return;
+    }
+
+    introElement.classList.add("is-visible");
+    localStorage.setItem("schedule_intro_seen","true");
+
+    let autoHideTimer=window.setTimeout(()=>{
+      introElement.classList.remove("is-visible");
+    },30000);
+
+    const closeIntro=()=>{
+      introElement.classList.remove("is-visible");
+      if(autoHideTimer){
+        window.clearTimeout(autoHideTimer);
+        autoHideTimer=null;
+      }
+    };
+
+    introElement.addEventListener("click",closeIntro);
+    introElement.addEventListener("keydown",(event)=>{
+      if(event.key==="Enter"||event.key===" "){
+        event.preventDefault();
+        closeIntro();
+      }
+    });
+  }
+
   function initSchedule(){
     const popup=document.getElementById("popup-jadwal");
     if(!popup){
@@ -150,6 +183,8 @@
     const listElement=document.getElementById("jadwal-lengkap");
     const closeButton=document.getElementById("tutup-jadwal");
     const indicatorElement=document.querySelector("[data-open-schedule]");
+
+    setupScheduleIntro();
 
     const openScheduleModal=()=>{
       popup.classList.remove("tersembunyi");
