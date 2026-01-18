@@ -62,12 +62,12 @@
     .revision-sim[open] summary{margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08)}
     .revision-sim[open] summary::after{content:"−"}
     .summary-details{margin-top:10px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08)}
-    .summary-details summary{list-style:none;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:10px;background:var(--site-accent-fade);border:1px dashed var(--site-accent-soft);transition:all .2s ease}
+    .summary-details summary{list-style:none;cursor:pointer;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:10px;background:var(--site-accent-fade);border:1px dashed var(--site-accent);transition:all .2s ease}
     .summary-details summary::after{content:"+";margin-left:auto;font-weight:700;color:var(--site-accent)}
     .summary-details:not([open]) summary{box-shadow:0 0 0 2px rgba(138,78,255,0.12)}
     .summary-details summary::-webkit-details-marker{display:none}
-    .summary-details[open] summary{margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08)}
-    .summary-details[open] summary::after{content:"−"}
+    .summary-details[open] summary{margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px dashed var(--site-accent)}
+    .summary-details[open] summary::after{content:"−";color:var(--site-accent)}
     .revision-sim .preview-note{font-size:11px;opacity:0.7;font-weight:500}
     .revision-note{font-size:12px;color:var(--muted);margin-top:6px}
     .revision-input{margin-top:8px}
