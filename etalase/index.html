@@ -271,15 +271,6 @@
     .ribbon{position:absolute;top:14px;right:14px;background:linear-gradient(135deg,var(--gold),#e6b800);
       color:#2a2200;font-weight:700;padding:4px 8px;border-radius:999px;font-size:11px;z-index:2}
 
-    html.modal-open,
-    body.modal-open{
-      height:100%;
-      overflow:hidden;
-    }
-    body.modal-open{
-      position:fixed;
-      width:100%;
-    }
     #popup-jadwal.modal{
       position:fixed;
       inset:0;
@@ -596,6 +587,7 @@
 
   <script src="https://unpkg.com/lottie-web/build/player/lottie.min.js"></script>
   <script src="../js/loader.js"></script>
+  <script src="/assets/js/modal-scroll-lock.js"></script>
   <script src="/assets/js/schedule.js"></script>
   <script src="../assets/js/order-code.js"></script>
   <script src="../assets/js/pricing.js"></script>
@@ -662,6 +654,8 @@
     const invoicePrintArea=document.getElementById('invoice-print');
     const defaultOrderMessage='<p>Masukkan Code Order untuk menampilkan detail.</p>';
     const STORAGE_KEY='order_tracker_last_input';
+    const lockScroll=()=>window.__ModalScrollLock?.lock?.();
+    const unlockScroll=()=>window.__ModalScrollLock?.unlock?.();
 
     let lastOrderData=null;
     let lastInvoiceData=null;
@@ -1058,8 +1052,11 @@
 
     function openOrderModal(){
       if(!orderModal) return;
-      orderModal.classList.add('show');
-      orderModal.setAttribute('aria-hidden','false');
+      if(!orderModal.classList.contains('show')){
+        orderModal.classList.add('show');
+        orderModal.setAttribute('aria-hidden','false');
+        lockScroll();
+      }
       if(kodeInput) kodeInput.focus();
     }
 
@@ -1078,8 +1075,11 @@
 
     function tutupPopup(){
       if(!orderModal) return;
-      orderModal.classList.remove('show');
-      orderModal.setAttribute('aria-hidden','true');
+      if(orderModal.classList.contains('show')){
+        orderModal.classList.remove('show');
+        orderModal.setAttribute('aria-hidden','true');
+        unlockScroll();
+      }
       if(openOrderBtn) openOrderBtn.focus();
     }
 
@@ -1355,8 +1355,16 @@
     const policyBtn=document.getElementById('policyBtn');
     const policyModal=document.getElementById('policyModal');
     const modalClose=document.getElementById('modalClose');
-    function closeModal(){ policyModal.classList.remove('show'); document.body.style.overflow=''; }
-    policyBtn.addEventListener('click',()=>{ policyModal.classList.add('show'); document.body.style.overflow='hidden'; });
+    function closeModal(){
+      policyModal.classList.remove('show');
+      unlockScroll();
+    }
+    policyBtn.addEventListener('click',()=>{
+      if(!policyModal.classList.contains('show')){
+        policyModal.classList.add('show');
+        lockScroll();
+      }
+    });
     modalClose.addEventListener('click',closeModal);
     policyModal.addEventListener('click',e=>{ if(e.target===policyModal) closeModal(); });
   </script>
