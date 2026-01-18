@@ -134,7 +134,7 @@
     let scheduleData={};
     const update=()=>updateView(scheduleData,statusElement,clockElement,listElement);
 
-    fetch("../config/prices.json")
+    fetch("/config/prices.json")
       .then((response)=>{
         if(!response.ok){
           throw new Error("Gagal mengambil data jadwal kerja.");

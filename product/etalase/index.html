@@ -7,11 +7,11 @@
 <meta name="description" content="KuhyaKuya Studio – Jasa editing video fleksibel. biaya transparan, order cepat, dan detail kebijakan jelas." />
 
   <!-- ✅ favicon -->
-  <link rel="icon" type="image/svg+xml" href="../img/favicon_v2.svg"> <!-- path updated -->
-  <link rel="apple-touch-icon" href="../img/favicon_v2.svg"> <!-- path updated -->
+  <link rel="icon" type="image/svg+xml" href="/img/favicon_v2.svg"> <!-- path updated -->
+  <link rel="apple-touch-icon" href="/img/favicon_v2.svg"> <!-- path updated -->
 
-  <link rel="stylesheet" href="../assets/css/theme.css">
-  <link rel="stylesheet" href="../assets/css/theme-custom.css">
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/theme-custom.css">
 
   <style>
     :root{
@@ -375,9 +375,9 @@
   <main class="container">
     <header class="site-header">
       <button id="openOrderBtn" type="button" class="btn-cek-status" title="Pantau ketersediaan file dan progres order secara real-time.">Order Tracker</button>
-      <a class="brand-link" href="../index.html" aria-label="Kembali ke halaman utama">
+      <a class="brand-link" href="/index.html" aria-label="Kembali ke halaman utama">
         <div class="brand">
-          <div class="logo"><img src="../img/Logo.png" alt="Logo"></div> <!-- path updated -->
+          <div class="logo"><img src="/img/Logo.png" alt="Logo"></div> <!-- path updated -->
           <div>
             <h1>KuhyaKuya Studio</h1>
             <p class="lead" id="rotating-text">Hasil bisa di lihat di portofolio</p>
@@ -477,15 +477,15 @@
       <h2>Panduan Simbol Status Proyek</h2>
       <div class="status-guide">
         <div class="status-item">
-          <img src="../img/free.png" alt="free icon">
+          <img src="/img/free.png" alt="free icon">
           <div><strong>Free</strong><br>Proyek gratis: bisa berupa paket Gabut, promosi internal, atau proyek tak berbayar.</div>
         </div>
         <div class="status-item">
-          <img src="../img/paid.png" alt="paid icon">
+          <img src="/img/paid.png" alt="paid icon">
           <div><strong>Paid</strong><br>Proyek berbayar yang sudah <strong>lunas</strong>, seluruh pembayaran telah diterima.</div>
         </div>
         <div class="status-item">
-          <img src="../img/unpaid.png" alt="unpaid icon">
+          <img src="/img/unpaid.png" alt="unpaid icon">
           <div><strong>Unpaid</strong><br>Pesanan yang <strong>belum dibayar</strong> atau kasus klien yang “kabur”. Video aman sebagai contoh karya, namun tidak boleh digunakan komersial sampai pembayaran diselesaikan.</div>
         </div>
       </div>
@@ -510,11 +510,11 @@
   </div>
 
   <script src="https://unpkg.com/lottie-web/build/player/lottie.min.js"></script>
-  <script src="../js/loader.js"></script>
-  <script src="../assets/js/schedule.js"></script>
-  <script src="../assets/js/order-code.js"></script>
-  <script src="../assets/js/pricing.js"></script>
-  <script src="../assets/js/portfolio.js"></script>
+  <script src="/js/loader.js"></script>
+  <script src="/assets/js/schedule.js"></script>
+  <script src="/assets/js/order-code.js"></script>
+  <script src="/assets/js/pricing.js"></script>
+  <script src="/assets/js/portfolio.js"></script>
   <script>
     const texts=[
       "biaya transparan, kerjaan adil. Satu klik untuk hasil terbaik bagi client dan freelancer.",
@@ -599,7 +599,7 @@
     async function ensurePriceConfig(){
       if(priceConfigCache && promoConfigCache) return {prices:priceConfigCache,promo:promoConfigCache};
       try{
-        const data=await Pricing.loadConfig("..");
+        const data=await Pricing.loadConfig("");
         priceConfigCache=data.prices||{};
         promoConfigCache=data.promo||{};
       }catch(err){
@@ -1136,7 +1136,7 @@
 
     async function loadPackages(){
       try{
-        const {prices,promo}=await Pricing.loadConfig("..");
+        const {prices,promo}=await Pricing.loadConfig("");
         if(prices) priceConfigCache=prices;
         if(promo) promoConfigCache=promo;
         renderPackages(prices.packages,promo);
@@ -1167,7 +1167,7 @@
               <div class="cta">
                 ${pkg.disabled
                   ? `<a class="btn" disabled>KOUTA HABIS</a>`
-                  : `<a class="btn" href="../order.html?id=${pkg.id}">Buat Pesanan</a>`}
+                  : `<a class="btn" href="/order.html?id=${pkg.id}">Buat Pesanan</a>`}
                 <button class="btn detail flip-btn" type="button">Detail</button>
               </div>
             </div>
@@ -1212,7 +1212,7 @@
     function numberWithSeparators(x){return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',')||'0'}
     function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[c]))}
     loadPackages();
-    Portfolio.loadAndRender("..");
+    Portfolio.loadAndRender("");
       const pfToggle=document.getElementById('pfToggle'); // get toggle label
       const pfGrid=document.getElementById('portfolio'); // get portfolio list
       pfToggle.addEventListener('click',()=>{ // attach click handler
@@ -1220,7 +1220,7 @@
         if(hidden){
           pfGrid.style.display='';
           pfToggle.classList.toggle('active',true); // toggle diamond fill
-          Portfolio.loadAndRender("..");
+          Portfolio.loadAndRender("");
         }else{
           pfToggle.classList.toggle('active',false); // toggle diamond fill
           Portfolio.hide();
