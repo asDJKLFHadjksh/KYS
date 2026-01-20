@@ -134,7 +134,7 @@
       "extra_revision_percent": 20,
       "durationText": "1–5 menit",
       "overRatePercentPerMin": 0.1801,
-      "leadTime": "2–15 hari",
+      "leadTime": "2–10 hari",
       "workloadPerMin": 3,
       "disabled": false,
       "deadlinePolicy": {
