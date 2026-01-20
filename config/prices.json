@@ -139,7 +139,7 @@
       "disabled": false,
       "deadlinePolicy": {
         "minDaysPerMinute": 3,
-        "idealDaysPerMinute": 1,
+        "idealDaysPerMinute": 5,
         "surchargePercent": 15
       },
       "features": [
