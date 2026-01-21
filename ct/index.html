@@ -149,6 +149,18 @@
     #exportPdfBtn{padding:6px 12px;border-radius:6px;border:none;background:var(--detail);color:#fff;font-weight:600;cursor:pointer;font-size:12px;white-space:nowrap}
     #exportPdfBtn[hidden]{display:none}
     .invoice-print{display:none}
+    @media print{
+      body{background:#fff}
+      body *{visibility:hidden}
+      #invoice-print,
+      #invoice-print *{visibility:visible}
+      #invoice-print{
+        display:block;
+        position:absolute;
+        inset:0;
+        padding:24px;
+      }
+    }
     .footer-actions{
       display:flex;
       justify-content:space-between;
