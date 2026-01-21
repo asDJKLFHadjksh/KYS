@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kuhyakuya - Copy Tracker</title>
+  <style>
+    :root{
+      color-scheme: dark;
+      --bg:#0f172a;
+      --card:#1e293b;
+      --accent:#38bdf8;
+      --text:#f8fafc;
+      --muted:#94a3b8;
+      --success:#22c55e;
+      --danger:#f87171;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Segoe UI",system-ui,-apple-system,sans-serif;
+      background:radial-gradient(circle at top,#1e293b 0%,#0f172a 45%,#0b1220 100%);
+      color:var(--text);
+      min-height:100vh;
+    }
+    a{color:var(--accent)}
+    .page{
+      max-width:980px;
+      margin:0 auto;
+      padding:32px 20px 64px;
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+    header{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    header h1{margin:0;font-size:28px}
+    header p{margin:0;color:var(--muted)}
+    .card{
+      background:rgba(30,41,59,0.85);
+      border:1px solid rgba(148,163,184,0.2);
+      border-radius:16px;
+      padding:20px;
+      box-shadow:0 12px 30px rgba(15,23,42,0.35);
+    }
+    .copy-area{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .copy-area label{font-weight:600}
+    .code-display{
+      width:100%;
+      min-height:120px;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(148,163,184,0.4);
+      background:#0b1220;
+      color:var(--text);
+      font-family:"Fira Code",ui-monospace,SFMono-Regular,Menlo,monospace;
+      resize:vertical;
+      word-break:break-all;
+      white-space:pre-wrap;
+    }
+    .copy-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+    }
+    .btn{
+      padding:12px 18px;
+      border-radius:10px;
+      border:1px solid transparent;
+      background:var(--accent);
+      color:#0b1220;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .btn.secondary{
+      background:transparent;
+      border-color:rgba(148,163,184,0.6);
+      color:var(--text);
+    }
+    .status-text{
+      font-weight:600;
+      color:var(--muted);
+    }
+    .status-text.success{color:var(--success)}
+    .status-text.error{color:var(--danger)}
+    .tracker-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:16px;
+    }
+    .tracker-form{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .tracker-form input{
+      padding:12px;
+      border-radius:10px;
+      border:1px solid rgba(148,163,184,0.4);
+      background:#0b1220;
+      color:var(--text);
+      font-size:16px;
+    }
+    .tracker-output{
+      min-height:140px;
+      background:#0b1220;
+      border-radius:12px;
+      padding:16px;
+      border:1px solid rgba(148,163,184,0.2);
+    }
+    .tracker-detail{
+      margin-top:16px;
+      padding:16px;
+      border-radius:12px;
+      background:#101826;
+      border:1px solid rgba(148,163,184,0.2);
+    }
+    .footer-actions{
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+    }
+    @media (max-width:600px){
+      .btn{width:100%}
+      .footer-actions{flex-direction:column;align-items:stretch}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>Copy Code Tracker</h1>
+      <p>Tempel kode tracker ke WhatsApp? Sekarang cukup tap link dan copy dari sini.</p>
+    </header>
+
+    <section class="card copy-area">
+      <label for="codeDisplay">Code Tracker</label>
+      <textarea id="codeDisplay" class="code-display" readonly placeholder="Kode tracker akan muncul di sini..."></textarea>
+      <div class="copy-actions">
+        <button id="copyButton" class="btn" type="button">Copy Code</button>
+        <span id="copyStatus" class="status-text">Menyiapkan kode...</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Order Tracker</h2>
+      <p class="status-text">Cek progres order langsung tanpa popup etalase.</p>
+      <div class="tracker-grid">
+        <div class="tracker-form">
+          <input id="kodeInput" type="text" placeholder="Input Code Order" autocomplete="off">
+          <div class="footer-actions">
+            <button id="searchBtn" class="btn" type="button">Track Order</button>
+            <button id="refreshBtn" class="btn secondary" type="button" aria-label="Refresh data CSV">Refresh Data</button>
+          </div>
+          <button id="backupRequestBtn" type="button" class="btn secondary" style="display:none">Minta File</button>
+        </div>
+        <div>
+          <div id="popup-isi" class="tracker-output">
+            <p>Masukkan Code Order untuk menampilkan detail.</p>
+          </div>
+          <div id="orderDetailPanel" class="tracker-detail" aria-live="polite">
+            <div class="order-detail-head">
+              <span class="order-detail-title">Rincian biaya</span>
+              <button id="exportPdfBtn" type="button" hidden>Export to PDF</button>
+            </div>
+            <div id="order-detail-content">
+              <p>Rincian harga akan muncul otomatis untuk code baru (KYS).</p>
+            </div>
+            <div id="order-detail-warning" class="order-detail-warning" hidden>
+              ⚠️ Peringatan: biaya pada rincian ini menggunakan konfigurasi harga terbaru, jadi bisa berbeda dari harga saat proyek dinyatakan selesai.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div id="errorBox" class="status-text"></div>
+      <div class="footer-actions">
+        <a class="btn secondary" href="/etalase/">Kembali ke Etalase</a>
+        <a class="btn secondary" href="/">Beranda</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="invoice-print" class="invoice-print" aria-hidden="true"></div>
+
+  <script src="/assets/js/order-code.js"></script>
+  <script src="/assets/js/pricing.js"></script>
+  <script src="/assets/js/order-tracker.js"></script>
+  <script>
+    const codeDisplay=document.getElementById('codeDisplay');
+    const copyButton=document.getElementById('copyButton');
+    const copyStatus=document.getElementById('copyStatus');
+    const errorBox=document.getElementById('errorBox');
+    let activeCode='';
+
+    const setStatus=(message,type)=>{
+      copyStatus.textContent=message;
+      copyStatus.classList.remove('success','error');
+      if(type) copyStatus.classList.add(type);
+    };
+
+    const showError=(message)=>{
+      errorBox.textContent=message;
+      errorBox.classList.add('error');
+    };
+
+    const fallbackCopy=(text)=>{
+      const temp=document.createElement('textarea');
+      temp.value=text;
+      temp.setAttribute('readonly','');
+      temp.style.position='absolute';
+      temp.style.left='-9999px';
+      document.body.appendChild(temp);
+      temp.select();
+      let success=false;
+      try{
+        success=document.execCommand('copy');
+      }catch(err){
+        success=false;
+      }
+      document.body.removeChild(temp);
+      return success;
+    };
+
+    const copyCode=async()=>{
+      if(!activeCode){
+        setStatus('Kode tidak ditemukan.', 'error');
+        return;
+      }
+      try{
+        if(navigator.clipboard?.writeText){
+          await navigator.clipboard.writeText(activeCode);
+          setStatus('Copied ✔', 'success');
+          return true;
+        }
+      }catch(err){
+        // fallback below
+      }
+      const success=fallbackCopy(activeCode);
+      setStatus(success ? 'Copied ✔' : 'Gagal copy, silakan tekan tombol lagi.', success ? 'success' : 'error');
+      return success;
+    };
+
+    const initTracker=()=>{
+      if(window.OrderTracker){
+        window.OrderTracker.init({basePath:".."});
+      }
+    };
+
+    const hash=window.location.hash;
+    if(!hash || hash.length<=1){
+      setStatus('Kode tidak ditemukan di URL.', 'error');
+      codeDisplay.value='';
+      showError('Kode tidak ditemukan. Pastikan kamu membuka link yang benar dari WhatsApp.');
+      initTracker();
+    }else{
+      const encoded=hash.slice(1);
+      try{
+        activeCode=decodeURIComponent(encoded);
+      }catch(err){
+        activeCode=encoded;
+      }
+      codeDisplay.value=activeCode;
+      setStatus('Menyalin otomatis...', null);
+      initTracker();
+      if(window.OrderTracker){
+        window.OrderTracker.setCode(activeCode);
+        window.OrderTracker.search();
+      }
+      copyCode().catch(()=>{});
+    }
+
+    copyButton.addEventListener('click',()=>{ copyCode(); });
+  </script>
+</body>
+</html>
