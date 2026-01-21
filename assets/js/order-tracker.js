@@ -330,8 +330,10 @@
     const detailHtml = state.orderDetailContent?.innerHTML || "";
     state.invoicePrintArea.innerHTML = `
       <div class="invoice">
-        <h1>Rincian biaya</h1>
-        ${detailHtml}
+        <div class="invoice-box">
+          <h1>Rincian biaya</h1>
+          ${detailHtml}
+        </div>
       </div>
     `;
   }
