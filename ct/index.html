@@ -204,7 +204,7 @@
       <p>Tempel kode tracker ke WhatsApp? Sekarang cukup tap link dan copy dari sini.</p>
     </header>
 
-    <section class="panel copy-area">
+    <section class="panel copy-area" id="copyTrackerPanel">
       <label for="codeDisplay">Code Tracker</label>
       <textarea id="codeDisplay" class="code-display" readonly placeholder="Kode tracker akan muncul di sini..."></textarea>
       <div class="copy-actions">
@@ -263,6 +263,7 @@
     const copyButton=document.getElementById('copyButton');
     const copyStatus=document.getElementById('copyStatus');
     const errorBox=document.getElementById('errorBox');
+    const copyTrackerPanel=document.getElementById('copyTrackerPanel');
     let activeCode='';
 
     const setStatus=(message,type)=>{
@@ -274,6 +275,12 @@
     const showError=(message)=>{
       errorBox.textContent=message;
       errorBox.classList.add('error');
+      errorBox.hidden=false;
+    };
+    const clearError=()=>{
+      errorBox.textContent='';
+      errorBox.classList.remove('error');
+      errorBox.hidden=true;
     };
 
     const fallbackCopy=(text)=>{
@@ -321,9 +328,10 @@
 
     const hash=window.location.hash;
     if(!hash || hash.length<=1){
-      setStatus('Kode tidak ditemukan di URL.', 'error');
+      setStatus('', null);
       codeDisplay.value='';
-      showError('Kode tidak ditemukan. Pastikan kamu membuka link yang benar dari WhatsApp.');
+      clearError();
+      if(copyTrackerPanel) copyTrackerPanel.hidden=true;
       initTracker();
     }else{
       const encoded=hash.slice(1);
@@ -334,6 +342,7 @@
       }
       codeDisplay.value=activeCode;
       setStatus('Menyalin otomatis...', null);
+      if(copyTrackerPanel) copyTrackerPanel.hidden=false;
       initTracker();
       if(window.OrderTracker){
         window.OrderTracker.setCode(activeCode);
