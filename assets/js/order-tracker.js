@@ -327,26 +327,13 @@
 
   function renderInvoice(state, data) {
     if (!state.invoicePrintArea || !data) return;
-    const { rowData, pkg, calc, revisionInfo, totalWithRevision, decoded, subtotalWithoutRevision } = data;
-    const durationText = decoded?.duration ? formatMinutes(decoded.duration) : "-";
-    const revisionPercentText = formatPercent(revisionInfo?.revisionPercent);
+    const detailHtml = state.orderDetailContent?.innerHTML || "";
     state.invoicePrintArea.innerHTML = `
       <div class="invoice">
-        <h1>Invoice</h1>
-        <p><strong>Judul:</strong> ${escapeHtml(rowData.judul)}</p>
-        <p><strong>Code Order:</strong> ${escapeHtml(rowData.codeOrder)}</p>
-        <p><strong>Code Projek:</strong> ${escapeHtml(rowData.codeProjek)}</p>
-        <p><strong>Tanggal Selesai:</strong> ${escapeHtml(rowData.tanggalSelesai)}</p>
-        <hr>
-        <p><strong>Paket:</strong> ${escapeHtml(pkg?.name || "-")}</p>
-        <p><strong>Durasi:</strong> ${durationText}</p>
-        <p><strong>biaya Paket:</strong> ${window.Pricing.fmtIDR(calc?.baseFinal || 0)}</p>
-        <p><strong>Biaya 5+:</strong> ${calc?.overMin || 0} mnt × ${window.Pricing.fmtIDR(calc?.overRate || 0)} = ${window.Pricing.fmtIDR(calc?.overCost || 0)}</p>
-        <p><strong>Deadline Surcharge:</strong> ${window.Pricing.fmtIDR(calc?.surchargeVal || 0)}</p>
-        <p><strong>Buffer Fee:</strong> ${window.Pricing.fmtIDR(calc?.bufVal || 0)}</p>
-        <p><strong>Subtotal (tanpa revisi):</strong> ${window.Pricing.fmtIDR(subtotalWithoutRevision || 0)}</p>
-        <p><strong>Biaya Revisi Tambahan:</strong> ${window.Pricing.fmtIDR(revisionInfo?.fee || 0)} (${revisionPercentText}% × Subtotal ${window.Pricing.fmtIDR(subtotalWithoutRevision || 0)} × ${revisionInfo?.extraCount ?? 0}x)</p>
-        <p class="order-detail-total"><strong>Total:</strong> ${window.Pricing.fmtIDR(totalWithRevision || 0)}</p>
+        <div class="invoice-box">
+          <h1>Rincian biaya</h1>
+          ${detailHtml}
+        </div>
       </div>
     `;
   }
