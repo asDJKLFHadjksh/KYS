@@ -491,6 +491,8 @@
       const btn=document.getElementById('btnOrder');
       const calc=JSON.parse(btn.dataset.calc);
       const phone=String(cfg.whatsapp);
+      const codeRaw=btn.dataset.code;
+      const copyLink=location.origin+"/ct/#"+encodeURIComponent(codeRaw);
       const msg=[
         `*Paket:* ${pkg.name}`,
         `*Durasi:* ${btn.dataset.durasi} menit`,
@@ -504,7 +506,7 @@
         `> Buffer fee: +${calc.bufPerc}% = ${Pricing.fmtIDR(calc.bufVal)}`,
         `> ${Pricing.fmtIDR(calc.baseFinal)} + ${Pricing.fmtIDR(calc.overCost)} + ${Pricing.fmtIDR(calc.surchargeVal)} + ${Pricing.fmtIDR(calc.bufVal)}`,
         `> Total: *${Pricing.fmtIDR(calc.total)}*\n`,
-        `*Code Tracker:* ${btn.dataset.code}\n`,
+        `*Code Tracker (klik untuk copy):* ${copyLink}\n`,
         btn.dataset.ref?`*Referensi:* ${btn.dataset.ref}\n`:null,
         `*Brief:* ${btn.dataset.note}`
       ].filter(Boolean).join('\n');
