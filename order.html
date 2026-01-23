@@ -506,7 +506,7 @@
         `> Buffer fee: +${calc.bufPerc}% = ${Pricing.fmtIDR(calc.bufVal)}`,
         `> ${Pricing.fmtIDR(calc.baseFinal)} + ${Pricing.fmtIDR(calc.overCost)} + ${Pricing.fmtIDR(calc.surchargeVal)} + ${Pricing.fmtIDR(calc.bufVal)}`,
         `> Total: *${Pricing.fmtIDR(calc.total)}*\n`,
-        `*Code Tracker (klik untuk copy):* ${copyLink}\n`,
+        `*Link Tracker:* ${copyLink}\n`,
         btn.dataset.ref?`*Referensi:* ${btn.dataset.ref}\n`:null,
         `*Brief:* ${btn.dataset.note}`
       ].filter(Boolean).join('\n');
