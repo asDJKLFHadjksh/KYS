@@ -134,12 +134,12 @@
       "extra_revision_percent": 20,
       "durationText": "1–5 menit",
       "overRatePercentPerMin": 0.1801,
-      "leadTime": "4–5 hari",
+      "leadTime": "2–10 hari",
       "workloadPerMin": 3,
       "disabled": false,
       "deadlinePolicy": {
-        "minDaysPerMinute": 0.8,
-        "idealDaysPerMinute": 1,
+        "minDaysPerMinute": 2,
+        "idealDaysPerMinute": 3,
         "surchargePercent": 15
       },
       "features": [
@@ -154,7 +154,7 @@
         "Iklan Produk",
         "Cinematic",
         "Motion Graphics",
-        "Video Musik"
+        "Video Musik (editing murni)"
       ],
       "policy": [
         "Paket premium dengan kebijakan ketat",

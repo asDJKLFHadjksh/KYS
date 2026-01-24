@@ -51,7 +51,30 @@
     });
   }
 
-  function updateView(schedule,statusElement,clockElement,listElement){
+  function getScheduleState(schedule,normalizedTime,dayName){
+    const todaySchedule=schedule&&schedule[dayName];
+    if(todaySchedule&&typeof todaySchedule.buka!=="undefined"&&typeof todaySchedule.tutup!=="undefined"){
+      const bukaMinutes=Number(todaySchedule.buka)*60;
+      const tutupMinutes=Number(todaySchedule.tutup)*60;
+      const currentMinutes=parseTimeToMinutes(normalizedTime);
+      const isOpen=currentMinutes!==null&&currentMinutes>=bukaMinutes&&currentMinutes<tutupMinutes;
+      return isOpen?"open":"closed";
+    }
+    return "unavailable";
+  }
+
+  function updateIndicator(indicatorElement,state){
+    if(!indicatorElement){
+      return;
+    }
+    indicatorElement.classList.toggle("is-open",state==="open");
+    indicatorElement.classList.toggle("is-closed",state==="closed");
+    indicatorElement.classList.toggle("is-unavailable",state==="unavailable");
+    const label=state==="open"?"Buka":state==="closed"?"Tutup":"Tidak tersedia";
+    indicatorElement.setAttribute("data-status",label);
+  }
+
+  function updateView(schedule,statusElement,clockElement,listElement,indicatorElement){
     const now=new Date();
     const normalizedTime=getNormalizedTimeString(now);
     if(clockElement){
@@ -63,23 +86,21 @@
       highlightCurrentDay(listElement,dayName);
     }
 
+    const scheduleState=getScheduleState(schedule,normalizedTime,dayName);
+    updateIndicator(indicatorElement,scheduleState);
+
     if(!statusElement){
       return;
     }
 
-    const todaySchedule=schedule&&schedule[dayName];
-
     statusElement.classList.remove("status-open","status-closed","status-unavailable");
 
-    if(todaySchedule&&typeof todaySchedule.buka!=="undefined"&&typeof todaySchedule.tutup!=="undefined"){
-      const bukaMinutes=Number(todaySchedule.buka)*60;
-      const tutupMinutes=Number(todaySchedule.tutup)*60;
-      const currentMinutes=parseTimeToMinutes(normalizedTime);
-      const isOpen=currentMinutes!==null&&currentMinutes>=bukaMinutes&&currentMinutes<tutupMinutes;
-      const statusLabel=isOpen?"Buka":"Tutup";
-      const statusClass=isOpen?"status-open":"status-closed";
-      statusElement.textContent=statusLabel;
-      statusElement.classList.add(statusClass);
+    if(scheduleState==="open"){
+      statusElement.textContent="Buka";
+      statusElement.classList.add("status-open");
+    }else if(scheduleState==="closed"){
+      statusElement.textContent="Tutup";
+      statusElement.classList.add("status-closed");
     }else{
       statusElement.textContent="Jadwal tidak tersedia";
       statusElement.classList.add("status-unavailable");
@@ -114,25 +135,98 @@
     highlightCurrentDay(listElement,getCurrentDayName());
   }
 
-  document.addEventListener("DOMContentLoaded",()=>{
+  function setupScheduleIntro(){
+    const introElement=document.getElementById("scheduleIntro");
+    if(!introElement){
+      return;
+    }
+    if(localStorage.getItem("schedule_intro_seen")==="true"){
+      return;
+    }
+
+    introElement.classList.add("is-visible");
+
+    const closeIntro=()=>{
+      introElement.classList.remove("is-visible");
+      localStorage.setItem("schedule_intro_seen","true");
+      if(autoHideTimer){
+        window.clearTimeout(autoHideTimer);
+        autoHideTimer=null;
+      }
+    };
+
+    let autoHideTimer=window.setTimeout(()=>{
+      closeIntro();
+    },60000);
+
+    introElement.addEventListener("click",closeIntro);
+    introElement.addEventListener("keydown",(event)=>{
+      if(event.key==="Enter"||event.key===" "){
+        event.preventDefault();
+        closeIntro();
+      }
+    });
+  }
+
+  function initSchedule(){
     const popup=document.getElementById("popup-jadwal");
     if(!popup){
       return;
     }
+    if(popup.dataset.scheduleReady==="true"){
+      return;
+    }
+    popup.dataset.scheduleReady="true";
 
     const statusElement=document.getElementById("status-jadwal");
     const clockElement=document.getElementById("jam-realtime");
     const listElement=document.getElementById("jadwal-lengkap");
     const closeButton=document.getElementById("tutup-jadwal");
+    const indicatorElement=document.querySelector("[data-open-schedule]");
+
+    setupScheduleIntro();
+
+    const lockScroll=()=>{
+      if(window.__ModalScrollLock?.lock){
+        window.__ModalScrollLock.lock();
+      }
+    };
+
+    const unlockScroll=()=>{
+      if(window.__ModalScrollLock?.unlock){
+        window.__ModalScrollLock.unlock();
+      }
+    };
+
+    const openScheduleModal=()=>{
+      if(popup.classList.contains("tersembunyi")){
+        popup.classList.remove("tersembunyi");
+        popup.setAttribute("aria-hidden","false");
+        lockScroll();
+      }
+    };
+
+    const closeScheduleModal=()=>{
+      if(!popup.classList.contains("tersembunyi")){
+        popup.classList.add("tersembunyi");
+        popup.setAttribute("aria-hidden","true");
+        unlockScroll();
+      }
+    };
 
     if(closeButton){
-      closeButton.addEventListener("click",()=>{
-        popup.classList.add("tersembunyi");
-      });
+      closeButton.addEventListener("click",closeScheduleModal);
     }
 
+    document.querySelectorAll("[data-open-schedule]").forEach((trigger)=>{
+      trigger.addEventListener("click",(event)=>{
+        event.preventDefault();
+        openScheduleModal();
+      });
+    });
+
     let scheduleData={};
-    const update=()=>updateView(scheduleData,statusElement,clockElement,listElement);
+    const update=()=>updateView(scheduleData,statusElement,clockElement,listElement,indicatorElement);
 
     fetch("../config/prices.json")
       .then((response)=>{
@@ -157,9 +251,14 @@
         update();
       })
       .finally(()=>{
-        popup.classList.remove("tersembunyi");
         update();
         setInterval(update,1000);
       });
-  });
+  }
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",initSchedule);
+  }else{
+    initSchedule();
+  }
 })();
