@@ -18,12 +18,12 @@
     },
     {
       "label": "X",
-      "url": "https://kuhyakuya.com/go/?to=dc",
+      "url": "https://kuhyakuya.com/go/?to=x",
       "favicon": "x.com"
     },
        {
       "label": "GitHub",
-      "url": "https://github.com/kuhyakuya",
+      "url": "https://kuhyakuya.com/go?to=gh",
       "favicon": "github.com"
     }
   ]
