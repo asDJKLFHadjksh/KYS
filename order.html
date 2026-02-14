@@ -253,6 +253,42 @@
       return {revisiUsed,included,extraCount,revisionPercent,fee};
     }
 
+    const BRIEF_CACHE_KEY='kys-order-brief-cache';
+    const BRIEF_CACHE_TTL_MS=60*60*1000;
+
+    function saveBriefCache(value){
+      const payload={text:value,ts:Date.now()};
+      localStorage.setItem(BRIEF_CACHE_KEY,JSON.stringify(payload));
+    }
+
+    function clearBriefCache(noteInput){
+      localStorage.removeItem(BRIEF_CACHE_KEY);
+      if(noteInput){
+        noteInput.value='';
+      }
+    }
+
+    function restoreBriefCache(noteInput){
+      if(!noteInput) return;
+      const raw=localStorage.getItem(BRIEF_CACHE_KEY);
+      if(!raw){
+        return;
+      }
+      try{
+        const payload=JSON.parse(raw);
+        const cachedText=typeof payload?.text === 'string' ? payload.text : '';
+        const cachedTs=Number(payload?.ts);
+        const isExpired=!Number.isFinite(cachedTs)||(Date.now()-cachedTs>BRIEF_CACHE_TTL_MS);
+        if(isExpired || !cachedText){
+          clearBriefCache(noteInput);
+          return;
+        }
+        noteInput.value=cachedText;
+      }catch(error){
+        clearBriefCache(noteInput);
+      }
+    }
+
     let pkg=null; let cfg=null; let promo=null;
     let copyStatusTimeout=null;
 
@@ -283,7 +319,14 @@
         refInput.addEventListener('input',()=>update({reason:'ref'}));
         refInput.addEventListener('change',()=>update({reason:'ref'}));
 
-        noteInput.addEventListener('input',()=>{update({enforceDeadlineMin:false,reason:'note'});updateCounter();});
+        restoreBriefCache(noteInput);
+        updateCounter();
+
+        noteInput.addEventListener('input',()=>{
+          saveBriefCache(noteInput.value);
+          update({enforceDeadlineMin:false,reason:'note'});
+          updateCounter();
+        });
         noteInput.addEventListener('change',()=>update({reason:'note-change'}));
         revisionInput.addEventListener('input',()=>update({enforceDeadlineMin:false,reason:'revision'}));
         revisionInput.addEventListener('change',()=>update({enforceDeadlineMin:false,reason:'revision-change'}));
@@ -448,12 +491,13 @@
       const btn=document.getElementById('btnOrder');
       const calc=JSON.parse(btn.dataset.calc);
       const phone=String(cfg.whatsapp);
+      const codeRaw=btn.dataset.code;
+      const copyLink=location.origin+"/ct/#"+encodeURIComponent(codeRaw);
       const msg=[
         `*Paket:* ${pkg.name}`,
         `*Durasi:* ${btn.dataset.durasi} menit`,
-        `*Deadline:* ${btn.dataset.days} hari (mulai sesuai jam kerja, setelah file RAW diterima)`,
-        '',
-        `*Ringkasan:*`,
+        `*Deadline:* ${btn.dataset.days} hari (mulai sesuai jam kerja, setelah file RAW diterima)\n`,
+        `*Rincian Biaya:*`,
         `> Harga normal: ${Pricing.fmtIDR(calc.normal)}`,
         calc.discountPercent>0?`> Diskon ${calc.discountPercent}%: -${Pricing.fmtIDR(calc.normal-calc.baseFinal)}`:null,
         `> Base price: ${Pricing.fmtIDR(calc.baseFinal)}`,
@@ -461,10 +505,9 @@
         `> Deadline surcharge: +${formatPercent(calc.surPerc)}% = ${Pricing.fmtIDR(calc.surchargeVal)}`,
         `> Buffer fee: +${calc.bufPerc}% = ${Pricing.fmtIDR(calc.bufVal)}`,
         `> ${Pricing.fmtIDR(calc.baseFinal)} + ${Pricing.fmtIDR(calc.overCost)} + ${Pricing.fmtIDR(calc.surchargeVal)} + ${Pricing.fmtIDR(calc.bufVal)}`,
-        `> Total: *${Pricing.fmtIDR(calc.total)}*`,
-        '',
-        `*Code Tracker:* ${btn.dataset.code}`,
-        btn.dataset.ref?`*Referensi:* ${btn.dataset.ref}`:null,
+        `> Total: *${Pricing.fmtIDR(calc.total)}*\n`,
+        `*Link Tracker:* ${copyLink}\n`,
+        btn.dataset.ref?`*Referensi:* ${btn.dataset.ref}\n`:null,
         `*Brief:* ${btn.dataset.note}`
       ].filter(Boolean).join('\n');
 

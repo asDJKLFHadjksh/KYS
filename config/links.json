@@ -15,6 +15,16 @@
       "label": "Discord Server",
       "url": "https://kuhyakuya.com/go/?to=dc",
       "favicon": "discord.com"
+    },
+    {
+      "label": "X",
+      "url": "https://kuhyakuya.com/go/?to=x",
+      "favicon": "x.com"
+    },
+       {
+      "label": "GitHub",
+      "url": "https://kuhyakuya.com/go?to=gh",
+      "favicon": "github.com"
     }
   ]
 }
