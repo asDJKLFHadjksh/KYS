@@ -26,6 +26,17 @@ body {
   margin: 0;
 }
 
+html.modal-open,
+body.modal-open {
+  height: 100%;
+  overflow: hidden;
+}
+
+body.modal-open {
+  position: fixed;
+  width: 100%;
+}
+
 a {
   text-decoration: none;
   color: inherit;
