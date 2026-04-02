@@ -236,9 +236,16 @@ function toggleTehGate(isActive) {
   if (!gateElements.overlay) {
     return;
   }
+  const wasActive = gateElements.overlay.classList.contains("is-active");
   document.body.classList.toggle("teh-gate-active", isActive);
   gateElements.overlay.classList.toggle("is-active", isActive);
   gateElements.overlay.setAttribute("aria-hidden", isActive ? "false" : "true");
+  if (isActive && !wasActive && window.__ModalScrollLock?.lock) {
+    window.__ModalScrollLock.lock();
+  }
+  if (!isActive && wasActive && window.__ModalScrollLock?.unlock) {
+    window.__ModalScrollLock.unlock();
+  }
 }
 
 function findGateValue(rows) {
@@ -880,6 +887,9 @@ function openLightbox(targetImage) {
   if (!overlay || !image) {
     return;
   }
+  if (overlay.classList.contains("is-open")) {
+    return;
+  }
   const fullSrc =
     targetImage.dataset.fullsrc || targetImage.currentSrc || targetImage.src;
   if (!fullSrc) {
@@ -890,6 +900,9 @@ function openLightbox(targetImage) {
   overlay.classList.add("is-open");
   overlay.setAttribute("aria-hidden", "false");
   document.body.classList.add("teh-lightbox-open");
+  if (window.__ModalScrollLock?.lock) {
+    window.__ModalScrollLock.lock();
+  }
   resetLightboxTransform();
 }
 
@@ -898,10 +911,16 @@ function closeLightbox() {
   if (!overlay || !image) {
     return;
   }
+  if (!overlay.classList.contains("is-open")) {
+    return;
+  }
   overlay.classList.remove("is-open");
   overlay.setAttribute("aria-hidden", "true");
   image.removeAttribute("src");
   document.body.classList.remove("teh-lightbox-open");
+  if (window.__ModalScrollLock?.unlock) {
+    window.__ModalScrollLock.unlock();
+  }
   resetLightboxTransform();
 }
 
